@@ -1,0 +1,219 @@
+[INFO] no.nynodata.tomcatrest:lookuptest:war:1.0-SNAPSHOT
+[INFO] +- com.google.code.gson:gson:jar:2.2.4:compile
+[INFO] +- no.nynodata.ordrik:ordrik-engine:jar:1.0-SNAPSHOT:compile
+[INFO] |  +- no.nynodata.ordrik:ordrik-provider-spi:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:common-lang:jar:1.0.3-SNAPSHOT:compile (version selected from constraint [1.0.2-SNAPSHOT,))
+[INFO] |  |  +- no.nynodata.common:common-util:jar:1.0.3-SNAPSHOT:compile (version selected from constraint [1.0.2-SNAPSHOT,))
+[INFO] |  |  +- no.nynodata.lexicon:lexicon-api:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.lexicon:paramal-model:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  |  +- net.sf.trove4j:trove4j:jar:3.0.2:compile
+[INFO] |  |  |  \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] |  |  \- net.sourceforge.collections:collections-generic:jar:4.01:compile
+[INFO] |  +- no.nynodata.ordrik:ordrik-provider-nosql:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  +- net.sf.opencsv:opencsv:jar:2.1:compile
+[INFO] |  |  +- no.nynodata.nlr:locale-bm:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:locale-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.lexicon:lexicon-fsa:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.fsa:fsa:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  |  |  +- commons-pool:commons-pool:jar:1.2:compile
+[INFO] |  |  |  |  \- no.nynodata.ext:avalon-ext:jar:1.0.1-SNAPSHOT:compile
+[INFO] |  |  |  |     \- avalon-framework:avalon-framework-impl:jar:4.3:compile
+[INFO] |  |  |  |        +- xml-apis:xmlParserAPIs:jar:2.0.2:compile
+[INFO] |  |  |  |        +- xalan:xalan:jar:2.6.0:compile
+[INFO] |  |  |  |        \- jmock:jmock:jar:1.0.1:compile
+[INFO] |  |  |  +- no.nynodata.fsa:fsa-catable:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.fsa:fsa-table:jar:1.0.4-SNAPSHOT:compile
+[INFO] |  |  |  |  +- no.nynodata.fsa:fsa-api:jar:1.0.4-SNAPSHOT:compile
+[INFO] |  |  |  |  \- no.nynodata.fsa:fsa-casimple:jar:1.0.4-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.fsa:fsa-table-preds:jar:1.0.4-SNAPSHOT:compile
+[INFO] |  |  |  |  \- no.nynodata.fsa:fsa-regex:jar:1.0.4-SNAPSHOT:compile
+[INFO] |  |  |  \- no.nynodata.lexicon:paramal-sql:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  |     +- no.nynodata.lexicon:lexicon-sql:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  |     |  \- no.nynodata.ext:jdbc-ext:jar:1.0.1-SNAPSHOT:compile
+[INFO] |  |  |     +- org.springframework:spring-jdbc:jar:3.0.6.RELEASE:compile
+[INFO] |  |  |     +- org.springframework:spring-test:jar:3.0.6.RELEASE:compile
+[INFO] |  |  |     \- org.dbunit:dbunit:jar:2.4.8:compile
+[INFO] |  |  |        \- junit:junit:jar:4.8.2:test
+[INFO] |  |  +- no.nynodata.lexicon:lexicon-core:jar:1.2.2-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.ext:colt-ext:jar:1.0.2-SNAPSHOT:compile
+[INFO] |  |  |  |  \- colt:colt:jar:1.0.3:compile
+[INFO] |  |  |  +- no.nynodata.multiaxis:multiaxis:jar:1.0.1-SNAPSHOT:compile
+[INFO] |  |  |  \- avalon-framework:avalon-framework-api:jar:4.3:compile
+[INFO] |  |  |     \- avalon-logkit:avalon-logkit:jar:2.1:compile
+[INFO] |  |  |        +- log4j:log4j:jar:1.2.8:compile
+[INFO] |  |  |        +- javax.servlet:servlet-api:jar:2.3:provided
+[INFO] |  |  |        +- geronimo-spec:geronimo-spec-javamail:jar:1.3.1-rc3:compile
+[INFO] |  |  |        \- geronimo-spec:geronimo-spec-jms:jar:1.1-rc4:compile
+[INFO] |  |  +- no.nynodata.nlr:fsalex-bm-morfo-2015:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  \- no.nynodata.nlr:nlr-data-support:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:fsalex-nn-morfo-2004:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:meaning-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  \- no.nynodata.nlr:morfo-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:meaning-bm:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:morfo-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:morfo-bm:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:synonym-orto-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:synonym-orto-bm:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:synonym-general-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:orto-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.nlr:orto-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  |  \- cglib:cglib:jar:2.1_3:compile
+[INFO] |  |  |  \- no.nynodata.common:common-io:jar:1.0.3-SNAPSHOT:compile (version selected from constraint [1.0.2-SNAPSHOT,))
+[INFO] |  |  +- no.nynodata.nlr:orto-bm:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:translation-bmnn-dict:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  \- no.nynodata.nlr:translation-bmnn-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.nlr:consistency-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.nlr:consistency-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  |  +- org.hamcrest:hamcrest-core:jar:1.2.1:compile
+[INFO] |  |  |  |  \- org.hamcrest:hamcrest-library:jar:1.2.1:compile
+[INFO] |  |  |  +- no.nynodata.amber:amber-sql-nn:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |  +- no.nynodata.amber:amber-sql-base:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |  +- org.springframework:spring-tx:jar:3.2.8.RELEASE:compile
+[INFO] |  |  |  |  +- commons-dbcp:commons-dbcp:jar:1.2.1:compile
+[INFO] |  |  |  |  +- com.googlecode.usc:jdbcdslog:jar:1.0.6.2:compile
+[INFO] |  |  |  |  \- no.nynodata.nlr.sql:nlr-sql-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  |     +- com.microsoft.sqlserver.jdbc:sqlserver:jar:jdbc4:2.0:compile
+[INFO] |  |  |  |     \- no.nynodata.dbtools:dbtools:jar:1.0.1-SNAPSHOT:compile
+[INFO] |  |  |  |        +- net.sourceforge.runcc:runcc:jar:0.7:compile
+[INFO] |  |  |  |        +- hsqldb:hsqldb:jar:1.6.1:compile
+[INFO] |  |  |  |        \- edu.oswego.cs:jsr166y:jar:20100406:compile
+[INFO] |  |  |  \- no.nynodata.amber:amber-nosql-base:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.amber:amber-api:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.amber:amber-valuemodel:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata:multiaxis:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  +- org.springframework.security:spring-security-acl:jar:3.1.4.RELEASE:compile
+[INFO] |  |  |  |  +- aopalliance:aopalliance:jar:1.0:compile
+[INFO] |  |  |  |  \- org.springframework.security:spring-security-core:jar:3.1.4.RELEASE:compile
+[INFO] |  |  |  +- org.springframework:spring-aop:jar:3.2.8.RELEASE:compile
+[INFO] |  |  |  \- com.google.guava:guava:jar:11.0.2:compile
+[INFO] |  |  +- no.nynodata.amber:amber-core:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.common:common-io-store:jar:1.0.3-SNAPSHOT:compile (version selected from constraint [1.0.2-SNAPSHOT,))
+[INFO] |  |  |  +- no.nynodata.workbench:textwithalternatives-dao:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |  \- no.nynodata.workbench:workbench-richtext-editor-swing:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     +- no.nynodata.workbench:workbench-richtext-editor-common:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     |  \- no.nynodata.workbench:workbench-richtext-text:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     |     +- no.nynodata.workbench:infrastructure-utils:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     |     |  \- com.miglayout:miglayout:jar:swing:3.7.4:compile
+[INFO] |  |  |  |     |     \- net.htmlparser.jericho:jericho-html:jar:3.3:compile
+[INFO] |  |  |  |     +- no.nynodata.workbench:workbench-swing:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     +- no.nynodata.workbench:workbench-richtext-tramsformation-api:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     |  +- org.json:json:jar:20160810:compile
+[INFO] |  |  |  |     |  \- no.nynodata.workbench:workbench-richtext-text:test-jar:tests:1.0-SNAPSHOT:compile
+[INFO] |  |  |  |     \- org.livevalues:livevalues-swing:jar:0.9.31:compile
+[INFO] |  |  |  +- com.googlecode.cqengine:cqengine:jar:1.2.4:compile
+[INFO] |  |  |  |  \- com.googlecode.concurrent-trees:concurrent-trees:jar:2.1.0:compile
+[INFO] |  |  |  +- org.slf4j:slf4j-jdk14:jar:1.5.10:compile
+[INFO] |  |  |  \- org.yaml:snakeyaml:jar:1.9:compile
+[INFO] |  |  +- no.nynodata.amber:amber-service:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.amber:amber-nosql-nn:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  |  +- no.nynodata.nlr:morfoklump-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  |  \- no.nynodata.nlr:morfoklump-base:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  |  \- no.nynodata.nlr:consistency-example-nn:jar:1.1.2-SNAPSHOT:compile
+[INFO] |  |  +- org.springframework:spring-core:jar:3.2.13.RELEASE:compile
+[INFO] |  |  +- org.springframework:spring-beans:jar:3.2.13.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-context:jar:3.2.13.RELEASE:compile
+[INFO] |  |     \- org.springframework:spring-expression:jar:3.2.13.RELEASE:compile
+[INFO] |  +- no.nynodata.common:io2:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:util2:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- bsaf:bsaf:jar:1.9.RC3:compile
+[INFO] |  |  \- commons-io:commons-io:jar:2.0.1:compile
+[INFO] |  +- no.nynodata.ordrik:ordrik-license-data-provider:jar:1.1-SNAPSHOT:compile
+[INFO] |  +- no.nynodata.license:license-common:jar:1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:time:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  |  \- commons-net:commons-net:jar:2.2:compile
+[INFO] |  |  +- commons-codec:commons-codec:jar:1.10:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:1.3.9:compile
+[INFO] |  |  +- org.livevalues:livevalues-transcoder-json:jar:0.9.33:compile
+[INFO] |  |  +- net.sf.plist:property-list:jar:2.0.0:compile
+[INFO] |  |  +- com.thoughtworks.xstream:xstream:jar:1.4.7:compile
+[INFO] |  |  |  +- xmlpull:xmlpull:jar:1.1.3.1:compile
+[INFO] |  |  |  \- xpp3:xpp3_min:jar:1.1.4c:compile
+[INFO] |  |  +- com.componio.jlicensure:client:jar:0.9.18:compile
+[INFO] |  |  \- com.componio.jlicensure:shared:jar:0.9.18:compile
+[INFO] |  +- no.nynodata.common:persister:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  +- no.nynodata.common:configuration:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:beans:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- commons-configuration:commons-configuration:jar:1.6:compile
+[INFO] |  |  |  +- commons-collections:commons-collections:jar:3.2.1:compile
+[INFO] |  |  |  +- commons-digester:commons-digester:jar:1.8:compile
+[INFO] |  |  |  \- commons-beanutils:commons-beanutils-core:jar:1.7.0:compile
+[INFO] |  |  \- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |     \- xml-apis:xml-apis:jar:1.0.b2:compile
+[INFO] |  +- no.nynodata.license:license-client:jar:1.2-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:classloader:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- no.nynodata.common:logging:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  |  +- org.springframework:spring-web:jar:3.2.13.RELEASE:compile
+[INFO] |  |  +- org.jdom:jdom2:jar:2.0.6:compile
+[INFO] |  |  +- args4j:args4j:jar:2.0.16:compile
+[INFO] |  |  +- org.apache.cxf:cxf-rt-bindings-soap:jar:3.1.6:compile
+[INFO] |  |  |  \- org.apache.cxf:cxf-rt-wsdl:jar:3.1.6:compile
+[INFO] |  |  |     \- wsdl4j:wsdl4j:jar:1.6.3:compile
+[INFO] |  |  +- org.apache.cxf:cxf-rt-databinding-jaxb-nyno:jar:1.2-SNAPSHOT:compile
+[INFO] |  |  +- org.apache.cxf:cxf-rt-ws-security:jar:3.1.6:compile
+[INFO] |  |  |  +- org.apache.cxf:cxf-rt-security-saml:jar:3.1.6:compile
+[INFO] |  |  |  |  \- org.apache.cxf:cxf-rt-security:jar:3.1.6:compile
+[INFO] |  |  |  +- net.sf.ehcache:ehcache:jar:2.10.1:compile
+[INFO] |  |  |  +- org.apache.wss4j:wss4j-ws-security-dom:jar:2.1.5:compile
+[INFO] |  |  |  |  \- org.apache.wss4j:wss4j-ws-security-common:jar:2.1.5:compile
+[INFO] |  |  |  |     +- org.apache.santuario:xmlsec:jar:2.0.6:compile
+[INFO] |  |  |  |     +- org.opensaml:opensaml-saml-impl:jar:3.1.1:compile
+[INFO] |  |  |  |     |  +- org.opensaml:opensaml-profile-api:jar:3.1.1:compile
+[INFO] |  |  |  |     |  |  \- org.opensaml:opensaml-core:jar:3.1.1:compile
+[INFO] |  |  |  |     |  +- org.opensaml:opensaml-saml-api:jar:3.1.1:compile
+[INFO] |  |  |  |     |  |  +- org.opensaml:opensaml-xmlsec-api:jar:3.1.1:compile
+[INFO] |  |  |  |     |  |  \- org.opensaml:opensaml-soap-api:jar:3.1.1:compile
+[INFO] |  |  |  |     |  +- org.opensaml:opensaml-security-impl:jar:3.1.1:compile
+[INFO] |  |  |  |     |  |  \- org.opensaml:opensaml-security-api:jar:3.1.1:compile
+[INFO] |  |  |  |     |  |     +- org.cryptacular:cryptacular:jar:1.0:compile
+[INFO] |  |  |  |     |  |     \- org.bouncycastle:bcprov-jdk15on:jar:1.51:compile
+[INFO] |  |  |  |     |  +- org.opensaml:opensaml-xmlsec-impl:jar:3.1.1:compile
+[INFO] |  |  |  |     |  \- net.shibboleth.utilities:java-support:jar:7.1.1:compile
+[INFO] |  |  |  |     |     \- joda-time:joda-time:jar:2.7:compile
+[INFO] |  |  |  |     +- org.opensaml:opensaml-xacml-impl:jar:3.1.1:compile
+[INFO] |  |  |  |     |  \- org.opensaml:opensaml-xacml-api:jar:3.1.1:compile
+[INFO] |  |  |  |     +- org.opensaml:opensaml-xacml-saml-impl:jar:3.1.1:compile
+[INFO] |  |  |  |     |  \- org.opensaml:opensaml-xacml-saml-api:jar:3.1.1:compile
+[INFO] |  |  |  |     +- org.jasypt:jasypt:jar:1.9.2:compile
+[INFO] |  |  |  |     \- org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.wss4j:wss4j-policy:jar:2.1.5:compile
+[INFO] |  |  |  |  \- org.apache.neethi:neethi:jar:3.0.3:compile
+[INFO] |  |  |  +- org.apache.wss4j:wss4j-ws-security-stax:jar:2.1.5:compile
+[INFO] |  |  |  |  \- org.apache.wss4j:wss4j-bindings:jar:2.1.5:compile
+[INFO] |  |  |  \- org.apache.wss4j:wss4j-ws-security-policy-stax:jar:2.1.5:compile
+[INFO] |  |  +- org.apache.cxf:cxf-rt-frontend-jaxws:jar:3.1.6:compile
+[INFO] |  |  |  +- xml-resolver:xml-resolver:jar:1.2:compile
+[INFO] |  |  |  +- org.ow2.asm:asm:jar:5.0.4:compile
+[INFO] |  |  |  +- org.apache.cxf:cxf-rt-bindings-xml:jar:3.1.6:compile
+[INFO] |  |  |  +- org.apache.cxf:cxf-rt-frontend-simple:jar:3.1.6:compile
+[INFO] |  |  |  \- org.apache.cxf:cxf-rt-ws-addr:jar:3.1.6:compile
+[INFO] |  |  |     \- org.apache.cxf:cxf-rt-ws-policy:jar:3.1.6:compile
+[INFO] |  |  +- no.nynodata.license:license-certificates:jar:1.0.4:compile
+[INFO] |  |  +- no.nynodata.license:license-certificates:jar:client:1.0.4:compile
+[INFO] |  |  \- commons-beanutils:commons-beanutils:jar:1.8.3:compile
+[INFO] |  +- de.schlichtherle.truezip:truezip-file:jar:7.7.1:compile
+[INFO] |  |  +- de.schlichtherle.truezip:truezip-driver-file:jar:7.7.1:runtime
+[INFO] |  |  \- de.schlichtherle.truezip:truezip-kernel:jar:7.7.1:compile
+[INFO] |  +- de.schlichtherle.truezip:truezip-driver-zip:jar:7.7.1:compile
+[INFO] |  |  +- de.schlichtherle.truezip:truezip-swing:jar:7.7.1:compile
+[INFO] |  |  \- org.apache.commons:commons-compress:jar:1.4.1:compile
+[INFO] |  +- no.nynodata.ordrik:common:jar:1.0.1-SNAPSHOT:compile
+[INFO] |  +- no.nynodata.common:messages:jar:1.0.3-SNAPSHOT:compile
+[INFO] |  +- org.livevalues:livevalues-value:jar:0.9.33:compile
+[INFO] |  |  \- org.livevalues:livevalues-logging:jar:0.9.33:compile
+[INFO] |  +- org.livevalues:livevalues-expression:jar:0.9.33:compile
+[INFO] |  +- org.livevalues:livevalues-transcoder-map:jar:0.9.33:compile
+[INFO] |  |  \- org.livevalues:livevalues-transcoder-api:jar:0.9.33:compile
+[INFO] |  |     \- org.livevalues:livevalues-io:jar:0.9.33:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.6:compile
+[INFO] |  +- net.java.dev.glazedlists:glazedlists_java15:jar:1.9.1:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:1.5.10:compile
+[INFO] +- com.sun.jersey:jersey-bundle:jar:1.19.2:compile
+[INFO] |  \- javax.ws.rs:jsr311-api:jar:1.1.1:compile
+[INFO] \- org.apache.cxf:cxf-rt-frontend-jaxrs:jar:3.1.6:compile
+[INFO]    +- org.apache.cxf:cxf-core:jar:3.1.6:compile
+[INFO]    |  +- org.codehaus.woodstox:woodstox-core-asl:jar:4.4.1:compile
+[INFO]    |  |  \- org.codehaus.woodstox:stax2-api:jar:3.1.4:compile
+[INFO]    |  \- org.apache.ws.xmlschema:xmlschema-core:jar:2.2.1:compile
+[INFO]    +- javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[INFO]    +- javax.annotation:javax.annotation-api:jar:1.2:compile
+[INFO]    \- org.apache.cxf:cxf-rt-transports-http:jar:3.1.6:compile
