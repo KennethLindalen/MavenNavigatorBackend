@@ -94,7 +94,8 @@ public class Main {
 
     public static void formatInputDocument(ArrayList<String> baseText) {
 
-        ArrayList<String> searchString = new ArrayList<String>(){
+        ArrayList<String> searchString = new ArrayList<String>()
+        {
             {
             add("[INFO] --- maven-dependency-plugin");
             add("[INFO] BUILD SUCCESS");
