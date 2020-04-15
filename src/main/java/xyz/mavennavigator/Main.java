@@ -16,12 +16,12 @@ public class Main {
 
         JsonNode current = new JsonNode(new JsonObject(), null, 0);
 
-//        TODO: Remove when converting to REST api.
         try {
             File textObject = new File("baseText.txt");
             Scanner textReader = new Scanner(textObject);
             while (textReader.hasNextLine()) {
                 String data = textReader.nextLine();
+                data = data.replaceAll(" {2,}", " ");
                 baseText.add(data);
             }
             textReader.close();
@@ -29,38 +29,91 @@ public class Main {
             e.printStackTrace();
         }
 
+        jsonArray.add(createTopLevelParent(baseText.get(0)));
+
         for (int i = 1; i <= baseText.size() - 1; i++) {
+
             String[] tokens = baseText.get(i).split(" ");
+            int level;
 
             if (baseText.get(i).contains("(version selected from constraint")) {
-                int level = tokens.length - 7;
+                level = tokens.length - 7;
                 tokens = tokens[tokens.length - 6].split(":");
-                JsonObject jo = createJsonObject(tokens, level);
-                jsonArray.add(jo);
             } else {
-                int level = tokens.length - 2;
+                level = tokens.length - 2;
                 tokens = tokens[tokens.length - 1].split(":");
-                JsonObject jo = createJsonObject(tokens, level);
-                jsonArray.add(jo);
             }
+
+            JsonObject jsonObject = createJsonObject(tokens, level);
+            jsonArray.add(jsonObject);
         }
-        for (JsonObject o : jsonArray) {
-            System.out.println(o);
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        System.out.println(gson.toJson(jsonArray));
+
+        for (JsonObject jo: jsonArray
+             ) {
+            System.out.println(jo);
         }
+    }
+
+    public static JsonObject createTopLevelParent(String parent) {
+        String[] holder = parent.split(" ");
+        String[] tokens = holder[1].split(":");
+
+        JsonObject object = new JsonObject();
+
+        object.addProperty("GroupId", tokens[0]);
+        object.addProperty("ArtifactId", tokens[1]);
+        object.addProperty("Version", tokens[3]);
+        object.addProperty("Level", 0);
+
+        JsonArray array = new JsonArray();
+        object.add("SubDependency", array);
+
+        return object;
     }
 
     public static JsonObject createJsonObject(String[] tokens, int level) {
 
         JsonObject object = new JsonObject();
-        object.addProperty("Artifact", tokens[0]);
-        object.addProperty("Group", tokens[1]);
+        object.addProperty("GroupId", tokens[0]);
+        object.addProperty("ArtifactId", tokens[1]);
         object.addProperty("Version", tokens[3]);
-        object.addProperty("Scope", tokens[4]);
+        if (tokens.length > 4) {
+            object.addProperty("Scope", tokens[4]);
+        } else {
+            object.addProperty("Scope", "No scope specified.");
+        }
         object.addProperty("Level", level);
 
         JsonArray array = new JsonArray();
         object.add("SubDependency", array);
 
         return object;
+    }
+
+    public static void formatInputDocument(ArrayList<String> baseText) {
+
+        ArrayList<String> searchString = new ArrayList<String>(){
+            {
+            add("[INFO] --- maven-dependency-plugin");
+            add("[INFO] BUILD SUCCESS");
+            add("[INFO] BUILD FAILURE");
+            }
+        };
+        
+        for (String ss: searchString) {
+            for (int i = 1; i <= baseText.size() - 1; i++) {
+                if (baseText.get(i).contains(ss)) {
+                    break;
+                } else {
+                    if (i == baseText.size() - 1) {
+                        baseText.remove(i);
+                    } else {
+                        baseText.remove(i - 1);
+                    }
+                }
+            }
+        }
     }
 }
