@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class main {
+public class Main {
 
     public static void main(String[] args) {
 
@@ -29,10 +29,11 @@ public class main {
             e.printStackTrace();
         }
 
-        JsonObject topLevelParent = createTopLevelParent(baseText.get(0));
-        jsonArray.add(topLevelParent);
-        JsonNode current = new JsonNode(topLevelParent, null, 0);
-        JsonNode topLevelJsonNode = new JsonNode(topLevelParent, null, 0);
+        JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
+        jsonArray.add(topLevelParentObject);
+        JsonNode current = new JsonNode(topLevelParentObject, null, 0);
+        JsonNode topLevelJsonNode = new JsonNode(topLevelParentObject, null, 0);
+
         for (int i = 1; i <= baseText.size() - 1; i++) {
 
             String[] tokens = baseText.get(i).split(" ");
@@ -58,17 +59,16 @@ public class main {
                         current,
                         jsonArray.get(i).get("Level").getAsInt()
                 );
+                jsonArray.remove(jsonArray.get(i));
             }
             else if(jsonArray.get(i).get("Level").getAsInt() == 1){
                 topLevelJsonNode.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
             }
         }
-        
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(jsonArray));
-//        for (JsonObject jo : jsonArray) {
-//            System.out.println(jo);
-//        }
+
+        for (JsonObject jo : jsonArray) {
+            System.out.println(jo);
+        }
     }
 
     public static JsonObject createTopLevelParent(String parent) {
@@ -108,28 +108,28 @@ public class main {
         return object;
     }
 
-    public static void formatInputDocument(ArrayList<String> baseText) {
-
-        ArrayList<String> searchString = new ArrayList<String>() {
-            {
-                add("[INFO] --- maven-dependency-plugin");
-                add("[INFO] BUILD SUCCESS");
-                add("[INFO] BUILD FAILURE");
-            }
-        };
-
-        for (String ss : searchString) {
-            for (int i = 1; i <= baseText.size() - 1; i++) {
-                if (baseText.get(i).contains(ss)) {
-                    break;
-                } else {
-                    if (i == baseText.size() - 1) {
-                        baseText.remove(i);
-                    } else {
-                        baseText.remove(i - 1);
-                    }
-                }
-            }
-        }
-    }
+//    public static void formatInputDocument(ArrayList<String> baseText) {
+//
+//        ArrayList<String> searchString = new ArrayList<String>() {
+//            {
+//                add("[INFO] --- maven-dependency-plugin");
+//                add("[INFO] BUILD SUCCESS");
+//                add("[INFO] BUILD FAILURE");
+//            }
+//        };
+//
+//        for (String ss : searchString) {
+//            for (int i = 1; i <= baseText.size() - 1; i++) {
+//                if (baseText.get(i).contains(ss)) {
+//                    break;
+//                } else {
+//                    if (i == baseText.size() - 1) {
+//                        baseText.remove(i);
+//                    } else {
+//                        baseText.remove(i - 1);
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
