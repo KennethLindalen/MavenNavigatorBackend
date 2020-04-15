@@ -7,21 +7,21 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class main {
 
     public static void main(String[] args) {
 
         ArrayList<String> baseText = new ArrayList<String>();
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
-        JsonNode current = new JsonNode(new JsonObject(), null, 0);
+
 
         try {
             File textObject = new File("baseText.txt");
             Scanner textReader = new Scanner(textObject);
             while (textReader.hasNextLine()) {
                 String data = textReader.nextLine();
-                data = data.replaceAll(" {2,}", " ");
+                data = data.replaceAll("[ ]{2,}", " ");
                 baseText.add(data);
             }
             textReader.close();
@@ -29,8 +29,10 @@ public class Main {
             e.printStackTrace();
         }
 
-        jsonArray.add(createTopLevelParent(baseText.get(0)));
-
+        JsonObject topLevelParent = createTopLevelParent(baseText.get(0));
+        jsonArray.add(topLevelParent);
+        JsonNode current = new JsonNode(topLevelParent, null, 0);
+        JsonNode topLevelJsonNode = new JsonNode(topLevelParent, null, 0);
         for (int i = 1; i <= baseText.size() - 1; i++) {
 
             String[] tokens = baseText.get(i).split(" ");
@@ -47,13 +49,26 @@ public class Main {
             JsonObject jsonObject = createJsonObject(tokens, level);
             jsonArray.add(jsonObject);
         }
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        System.out.println(gson.toJson(jsonArray));
 
-        for (JsonObject jo: jsonArray
-             ) {
-            System.out.println(jo);
+        for (int i = 1; i <= jsonArray.size() - 1; i++) {
+            if (jsonArray.get(i).get("Level").getAsInt() > current.getLevel()) {
+                current.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
+                current = new JsonNode(
+                        jsonArray.get(i),
+                        current,
+                        jsonArray.get(i).get("Level").getAsInt()
+                );
+            }
+            else if(jsonArray.get(i).get("Level").getAsInt() == 1){
+                topLevelJsonNode.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
+            }
         }
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(jsonArray));
+//        for (JsonObject jo : jsonArray) {
+//            System.out.println(jo);
+//        }
     }
 
     public static JsonObject createTopLevelParent(String parent) {
@@ -65,6 +80,7 @@ public class Main {
         object.addProperty("GroupId", tokens[0]);
         object.addProperty("ArtifactId", tokens[1]);
         object.addProperty("Version", tokens[3]);
+        object.addProperty("Scope", "");
         object.addProperty("Level", 0);
 
         JsonArray array = new JsonArray();
@@ -94,16 +110,15 @@ public class Main {
 
     public static void formatInputDocument(ArrayList<String> baseText) {
 
-        ArrayList<String> searchString = new ArrayList<String>()
-        {
+        ArrayList<String> searchString = new ArrayList<String>() {
             {
-            add("[INFO] --- maven-dependency-plugin");
-            add("[INFO] BUILD SUCCESS");
-            add("[INFO] BUILD FAILURE");
+                add("[INFO] --- maven-dependency-plugin");
+                add("[INFO] BUILD SUCCESS");
+                add("[INFO] BUILD FAILURE");
             }
         };
-        
-        for (String ss: searchString) {
+
+        for (String ss : searchString) {
             for (int i = 1; i <= baseText.size() - 1; i++) {
                 if (baseText.get(i).contains(ss)) {
                     break;
