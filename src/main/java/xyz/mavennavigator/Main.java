@@ -51,6 +51,7 @@ public class Main {
             jsonArray.add(jsonObject);
         }
 
+//        Sorting the dependencies by the levels of each object
         for (int i = 1; i <= jsonArray.size() - 1; i++) {
             if (jsonArray.get(i).get("Level").getAsInt() > current.getLevel()) {
                 current.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
