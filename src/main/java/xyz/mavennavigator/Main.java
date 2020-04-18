@@ -14,8 +14,6 @@ public class Main {
         ArrayList<String> baseText = new ArrayList<String>();
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
-
-
         try {
             File textObject = new File("baseText.txt");
             Scanner textReader = new Scanner(textObject);
@@ -109,28 +107,4 @@ public class Main {
         return object;
     }
 
-//    public static void formatInputDocument(ArrayList<String> baseText) {
-//
-//        ArrayList<String> searchString = new ArrayList<String>() {
-//            {
-//                add("[INFO] --- maven-dependency-plugin");
-//                add("[INFO] BUILD SUCCESS");
-//                add("[INFO] BUILD FAILURE");
-//            }
-//        };
-//
-//        for (String ss : searchString) {
-//            for (int i = 1; i <= baseText.size() - 1; i++) {
-//                if (baseText.get(i).contains(ss)) {
-//                    break;
-//                } else {
-//                    if (i == baseText.size() - 1) {
-//                        baseText.remove(i);
-//                    } else {
-//                        baseText.remove(i - 1);
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
