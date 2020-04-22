@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<String> baseText = new ArrayList<String>();
+        ArrayList<String> dataText = new ArrayList<String>();
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
         try {
@@ -20,15 +20,19 @@ public class Main {
             while (textReader.hasNextLine()) {
                 String data = textReader.nextLine();
                 data = data.replaceAll("[ ]{2,}", " ");
-                baseText.add(data);
+                dataText.add(data);
             }
             textReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        Formatter formatText = new Formatter(dataText);
+        ArrayList<String> baseText = formatText.FormatText(formatText.indexFinder());
+
         JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
         jsonArray.add(topLevelParentObject);
+
         JsonNode current = new JsonNode(topLevelParentObject, null, 0);
         JsonNode topLevelJsonNode = new JsonNode(topLevelParentObject, null, 0);
 
@@ -49,7 +53,6 @@ public class Main {
             jsonArray.add(jsonObject);
         }
 
-//        Sorting the dependencies by the levels of each object
         for (int i = 1; i <= jsonArray.size() - 1; i++) {
             if (jsonArray.get(i).get("Level").getAsInt() > current.getLevel()) {
                 current.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
@@ -58,11 +61,11 @@ public class Main {
                         current,
                         jsonArray.get(i).get("Level").getAsInt()
                 );
-                jsonArray.remove(jsonArray.get(i));
             }
             else if(jsonArray.get(i).get("Level").getAsInt() == 1){
                 topLevelJsonNode.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
             }
+            jsonArray.remove(jsonArray.get(i--));
         }
 
         for (JsonObject jo : jsonArray) {
