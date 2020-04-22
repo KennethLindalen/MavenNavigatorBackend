@@ -1,16 +1,18 @@
 package xyz.mavennavigator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Formatter {
 
-    String inputText;
+    ArrayList<String> inputText;
 
-    public Formatter(String inputText) {
+    public Formatter(ArrayList<String> inputText) {
         this.inputText = inputText;
     }
 
-    public ArrayList<String> FormatText(ArrayList<String> input, ArrayList<Integer> indexList) {
+    public ArrayList<String> FormatText(ArrayList<Integer> indexList) {
+        ArrayList<String> input = this.inputText;
         int startIndex = indexList.get(0);
         int endIndex = indexList.get(1);
 
@@ -26,7 +28,8 @@ public class Formatter {
         return output;
     }
 
-    public static ArrayList<Integer> indexFinder(ArrayList<String> input) {
+    public  ArrayList<Integer> indexFinder() {
+        ArrayList<String> input = this.inputText;
         ArrayList<Integer> indexList = new ArrayList<Integer>();
         ArrayList<String> searchString = new ArrayList<String>() {
             {
