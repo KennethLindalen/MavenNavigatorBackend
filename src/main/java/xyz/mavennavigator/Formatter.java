@@ -1,8 +1,9 @@
 package xyz.mavennavigator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+
+// THIS DOES NOT WORK YET, CURRENTLY PRIORITIZING WORKING ON THE JSON FORMATTER AND NOT THE DOCUMENT FORMATTER.
 public class Formatter {
 
     ArrayList<String> inputText;
@@ -12,6 +13,7 @@ public class Formatter {
     }
 
     public ArrayList<String> FormatText(ArrayList<Integer> indexList) {
+
         ArrayList<String> input = this.inputText;
         int startIndex = indexList.get(0);
         int endIndex = indexList.get(1);
@@ -19,16 +21,19 @@ public class Formatter {
         ArrayList<String> output = new ArrayList<String>();
 
         for (int i = 0; i <= startIndex; i++) {
+            //noinspection SuspiciousListRemoveInLoop
             input.remove(i);
         }
         for (int i = endIndex; i <= input.size() - 1; i++) {
+            //noinspection SuspiciousListRemoveInLoop
             input.remove(i);
         }
 
         return output;
     }
 
-    public  ArrayList<Integer> indexFinder() {
+    public ArrayList<Integer> indexFinder() {
+
         ArrayList<String> input = this.inputText;
         ArrayList<Integer> indexList = new ArrayList<Integer>();
         ArrayList<String> searchString = new ArrayList<String>() {
@@ -43,9 +48,9 @@ public class Formatter {
             for (String s : searchString) {
                 if (input.get(i).contains(s)) {
                     if (s.equals(searchString.get(0))) {
-                        indexList.add(i);
+                        indexList.add(i + 1);
                     } else if (s.equals(searchString.get(1)) || s.equals(searchString.get(2))) {
-                        indexList.add(i);
+                        indexList.add(i - 1);
                     }
                 }
             }
