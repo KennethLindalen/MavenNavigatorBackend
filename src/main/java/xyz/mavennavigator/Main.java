@@ -5,13 +5,14 @@ import com.google.gson.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<String> dataText = new ArrayList<String>();
+        ArrayList<String> baseText = new ArrayList<String>();
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
         try {
@@ -20,21 +21,21 @@ public class Main {
             while (textReader.hasNextLine()) {
                 String data = textReader.nextLine();
                 data = data.replaceAll("[ ]{2,}", " ");
-                dataText.add(data);
+                baseText.add(data);
             }
             textReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Formatter formatText = new Formatter(dataText);
-        ArrayList<String> baseText = formatText.FormatText(formatText.indexFinder());
+//        Not yet fixed, does in absolutely no way work.
+
+//        Formatter formatText = new Formatter(dataText);
+//        ArrayList<String> baseText = formatText.FormatText(formatText.indexFinder());
 
         JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
         jsonArray.add(topLevelParentObject);
 
-        JsonNode current = new JsonNode(topLevelParentObject, null, 0);
-        JsonNode topLevelJsonNode = new JsonNode(topLevelParentObject, null, 0);
 
         for (int i = 1; i <= baseText.size() - 1; i++) {
 
@@ -53,20 +54,12 @@ public class Main {
             jsonArray.add(jsonObject);
         }
 
-        for (int i = 1; i <= jsonArray.size() - 1; i++) {
-            if (jsonArray.get(i).get("Level").getAsInt() > current.getLevel()) {
-                current.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
-                current = new JsonNode(
-                        jsonArray.get(i),
-                        current,
-                        jsonArray.get(i).get("Level").getAsInt()
-                );
-            }
-            else if(jsonArray.get(i).get("Level").getAsInt() == 1){
-                topLevelJsonNode.getObject().get("SubDependency").getAsJsonArray().add(jsonArray.get(i));
-            }
-            jsonArray.remove(jsonArray.get(i--));
-        }
+        treeSorter(jsonArray);
+
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        for (JsonObject jo: jsonArray) {
+//            System.out.println(gson.toJson(jo));
+//        }
 
         for (JsonObject jo : jsonArray) {
             System.out.println(jo);
@@ -108,6 +101,25 @@ public class Main {
         object.add("SubDependency", array);
 
         return object;
+    }
+
+    public static ArrayList<JsonObject> treeSorter(ArrayList<JsonObject> depList) {
+
+        for (int i = 1; i <= (depList.size() - 1); i++) {
+            if (depList.get(i - 1).get("Level").getAsInt() < depList.get(i).get("Level").getAsInt()) {
+                depList.get(i - 1).get("SubDependency").getAsJsonArray().add(depList.get(i));
+                int counter = i;
+                do {
+                    if (depList.get(counter).get("Level").getAsInt() == depList.get(i).get("Level").getAsInt()) {
+                        depList.get(i - 1).get("SubDependency").getAsJsonArray().add(depList.get(counter));
+                        depList.remove(counter);
+                    }
+                    counter += 1;
+                } while (depList.get(i).get("Level").getAsInt() == depList.get(counter).get("Level").getAsInt());
+                depList.remove(i);
+            }
+        }
+        return depList;
     }
 
 }
