@@ -1,4 +1,4 @@
-###Gjøreliste for utvikling av MavenNavigator
+### Gjøreliste for utvikling av MavenNavigator
 
 * [ ] Lage server
     * [ ] Akseptere POST-request
