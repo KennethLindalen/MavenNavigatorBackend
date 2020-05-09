@@ -15,7 +15,7 @@ public class Main {
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
         try {
-            File textObject = new File("baseText.txt");
+            File textObject = new File("Resources/baseText.txt");
             Scanner textReader = new Scanner(textObject);
             while (textReader.hasNextLine()) {
                 String data = textReader.nextLine();
