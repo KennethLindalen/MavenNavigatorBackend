@@ -11,8 +11,10 @@
     * [ ] Funksjonalitet
 * [ ] MVP grunnprodukt
     * [x] Konverter til JSON
-    * [ ] Sorter JSON for subdependencies
+      * [ ] Sorter JSON for subdependencies
     * [ ] Dokumentformatering
     * [x] Exceptionhandling
     * [ ] Finne versjonskonflikter
+       * [ ] Vise kompileringsrekkefølge for å fikse problemet
+       * [ ] Vise ny og fikset pom-fil(?)
     
