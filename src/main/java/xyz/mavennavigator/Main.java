@@ -28,7 +28,6 @@ public class Main {
         }
 
 //        Not yet fixed, does in absolutely no way work.
-
 //        Formatter formatText = new Formatter(dataText);
 //        ArrayList<String> baseText = formatText.FormatText(formatText.indexFinder());
 
