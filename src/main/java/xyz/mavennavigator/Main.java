@@ -52,16 +52,12 @@ public class Main {
             jsonArray.add(jsonObject);
         }
 
-        treeSorter(jsonArray);
 
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        for (JsonObject jo: jsonArray) {
-//            System.out.println(gson.toJson(jo));
-//        }
+            JsonObject jo = treeSorter(jsonArray);
 
-        for (JsonObject jo : jsonArray) {
-            System.out.println(jo);
-        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(jo));
+
     }
 
     public static JsonObject createTopLevelParent(String parent) {
@@ -101,23 +97,32 @@ public class Main {
         return object;
     }
 
-    public static ArrayList<JsonObject> treeSorter(ArrayList<JsonObject> depList) {
+    public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
+        ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
+        holder.remove(0);
+        JsonObject root = depList.get(0).getAsJsonObject();
+        JsonObject prev = root;
+        JsonObject currentRoot = root;
 
-        for (int i = 1; i <= (depList.size() - 1); i++) {
-            if (depList.get(i - 1).get("Level").getAsInt() < depList.get(i).get("Level").getAsInt()) {
-                depList.get(i - 1).get("SubDependency").getAsJsonArray().add(depList.get(i));
-                int counter = i;
-                do {
-                    if (depList.get(counter).get("Level").getAsInt() == depList.get(i).get("Level").getAsInt()) {
-                        depList.get(i - 1).get("SubDependency").getAsJsonArray().add(depList.get(counter));
-                        depList.remove(counter);
+        for (JsonObject current : holder) {
+            if (current.get("Level").getAsInt() > prev.get("Level").getAsInt()) {
+                prev.get("SubDependency").getAsJsonArray().add(current);
+                prev = current;
+            } else {
+                if (current.get("Level").getAsInt() < prev.get("Level").getAsInt()) {
+                    root.get("SubDependency").getAsJsonArray().add(current);
+                } else {
+                    if (current.get("Level").getAsInt() == currentRoot.get("Level").getAsInt()) {
+                        root.get("SubDependency").getAsJsonArray().add(current);
+                    } else {
+                        currentRoot.get("SubDependency").getAsJsonArray().add(current);
                     }
-                    counter += 1;
-                } while (depList.get(i).get("Level").getAsInt() == depList.get(counter).get("Level").getAsInt());
-                depList.remove(i);
+                }
+                currentRoot = current;
+                prev = current;
             }
         }
-        return depList;
+        return root;
     }
 
 }
