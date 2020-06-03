@@ -20,13 +20,8 @@ public class Formatter {
 
         ArrayList<String> output = new ArrayList<String>();
 
-        for (int i = 0; i <= startIndex; i++) {
-            //noinspection SuspiciousListRemoveInLoop
-            input.remove(i);
-        }
-        for (int i = endIndex; i <= input.size() - 1; i++) {
-            //noinspection SuspiciousListRemoveInLoop
-            input.remove(i);
+        for (int i = startIndex; i <= endIndex; i++) {
+            output.add(input.get(i));
         }
 
         return output;

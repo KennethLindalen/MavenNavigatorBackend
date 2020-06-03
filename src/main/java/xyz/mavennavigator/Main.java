@@ -56,8 +56,8 @@ public class Main {
             JsonObject jo = treeSorter(jsonArray);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(jo));
-
+//        System.out.println(gson.toJson(jo));
+        System.out.println(jo);
     }
 
     public static JsonObject createTopLevelParent(String parent) {
@@ -104,19 +104,23 @@ public class Main {
         JsonObject prev = root;
         JsonObject currentRoot = root;
 
-        for (JsonObject current : holder) {
-            if (current.get("Level").getAsInt() > prev.get("Level").getAsInt()) {
+        for (JsonObject current : holder){
+            if(current.get("Level").getAsInt() > prev.get("Level").getAsInt()){
                 prev.get("SubDependency").getAsJsonArray().add(current);
                 prev = current;
-            } else {
-                if (current.get("Level").getAsInt() < prev.get("Level").getAsInt()) {
+            } else if (current.get("Level").getAsInt() < prev.get("Level").getAsInt()){
+                if(current.get("Level").getAsInt() > currentRoot.get("Level").getAsInt()) {
+                    currentRoot.get("SubDependency").getAsJsonArray().add(current);
+                }else {
                     root.get("SubDependency").getAsJsonArray().add(current);
-                } else {
-                    if (current.get("Level").getAsInt() == currentRoot.get("Level").getAsInt()) {
-                        root.get("SubDependency").getAsJsonArray().add(current);
-                    } else {
-                        currentRoot.get("SubDependency").getAsJsonArray().add(current);
-                    }
+                }
+                currentRoot = current;
+                prev = current;
+            }else{
+                if(currentRoot.get("Level").getAsInt() == current.get("Level").getAsInt()) {
+                    root.get("SubDependency").getAsJsonArray().add(current);
+                }else{
+                    currentRoot.get("SubDependency").getAsJsonArray().add(current);
                 }
                 currentRoot = current;
                 prev = current;
@@ -124,5 +128,4 @@ public class Main {
         }
         return root;
     }
-
 }
