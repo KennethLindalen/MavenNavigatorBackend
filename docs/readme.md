@@ -8,7 +8,7 @@
     * [x] Skaffe domene
     * [x] Skaffe server for hosting
     * [x] MVP design
-    * [ ] Funksjonalitet
+    * [x] Funksjonalitet
 * [ ] MVP grunnprodukt
     * [x] Konverter til JSON
       * [ ] Sorter JSON for subdependencies
