@@ -11,7 +11,7 @@
     * [x] Funksjonalitet
 * [ ] MVP grunnprodukt
     * [x] Konverter til JSON
-      * [ ] Sorter JSON for subdependencies
+      * [x] Sorter JSON for subdependencies
     * [ ] Dokumentformatering
     * [x] Exceptionhandling
     * [ ] Finne versjonskonflikter
