@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // THIS DOES NOT WORK YET, CURRENTLY PRIORITIZING WORKING ON THE JSON FORMATTER AND NOT THE DOCUMENT FORMATTER.
 public class Formatter {
 
-    ArrayList<String> inputText;
+    private ArrayList<String> inputText;
 
     public Formatter(ArrayList<String> inputText) {
         this.inputText = inputText;
@@ -21,7 +21,9 @@ public class Formatter {
         ArrayList<String> output = new ArrayList<String>();
 
         for (int i = startIndex; i <= endIndex; i++) {
-            output.add(input.get(i));
+            String tmpStr = input.get(i);
+            tmpStr = tmpStr.replaceAll("[ ]{2,}", " ");
+            output.add(tmpStr);
         }
 
         return output;

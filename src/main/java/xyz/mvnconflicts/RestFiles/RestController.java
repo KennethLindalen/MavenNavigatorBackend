@@ -6,14 +6,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import xyz.mvnconflicts.Extras.ContactObject;
+import xyz.mvnconflicts.Product.Formatter;
+import xyz.mvnconflicts.Product.InputObject;
+import xyz.mvnconflicts.Product.JsonFormatter;
+
+import java.util.ArrayList;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
     @PostMapping(value = "/createTree", consumes = "application/json", produces = "applcation/json")
     public JsonObject createJsonTree(@RequestBody InputObject inputObject){
-        JsonObject responseObject = null;
-        return responseObject;
+
+        Formatter formatter = new Formatter(inputObject.getInputList());
+        ArrayList<String> formattedDocument = formatter.FormatText(formatter.indexFinder());
+        JsonFormatter jsonFormatter = new JsonFormatter(formattedDocument){
+            {
+                formatToJson();
+            }
+        };
+        return jsonFormatter.createSortedTree();
     }
 
     @PostMapping(value = "/findConflicts", consumes = "application/json", produces = "applcation/json")

@@ -8,8 +8,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JsonFormatter {
+    private ArrayList<String> baseText;
+    private JsonObject tree;
+    private ArrayList<JsonObject> jsonList;
 
-    public static JsonObject JsonFormatter(ArrayList<String> baseText) {
+    public JsonFormatter(ArrayList<String> baseText) {
+        this.baseText = baseText;
+    }
+
+    public ArrayList<JsonObject> formatToJson() {
+        ArrayList<String> baseText = this.baseText;
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
 
         JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
@@ -28,14 +36,11 @@ public class JsonFormatter {
             JsonObject jsonObject = createJsonObject(tokens, level);
             jsonArray.add(jsonObject);
         }
+            return jsonArray;
+    }
 
-
-        JsonObject jo = treeSorter(jsonArray);
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(jo));
-
-        return jo;
+    public JsonObject createSortedTree(){
+        return treeSorter(jsonList);
     }
 
     public static JsonObject createTopLevelParent(String parent) {
