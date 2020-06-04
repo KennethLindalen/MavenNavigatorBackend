@@ -1,4 +1,4 @@
-package xyz.mavennavigator;
+package xyz.mvnconflicts;
 
 import com.google.gson.*;
 
@@ -7,39 +7,17 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class JsonFormatter {
 
-    public static void main(String[] args) {
-
-        ArrayList<String> baseText = new ArrayList<String>();
+    public static JsonObject JsonFormatter(ArrayList<String> baseText) {
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
-
-        try {
-            File textObject = new File("Resources/baseText.txt");
-            Scanner textReader = new Scanner(textObject);
-            while (textReader.hasNextLine()) {
-                String data = textReader.nextLine();
-                data = data.replaceAll("[ ]{2,}", " ");
-                baseText.add(data);
-            }
-            textReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        Not yet fixed, does in absolutely no way work.
-//        Formatter formatText = new Formatter(dataText);
-//        ArrayList<String> baseText = formatText.FormatText(formatText.indexFinder());
 
         JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
         jsonArray.add(topLevelParentObject);
 
-
         for (int i = 1; i <= baseText.size() - 1; i++) {
-
             String[] tokens = baseText.get(i).split(" ");
             int level;
-
             if (baseText.get(i).contains("(version selected from constraint")) {
                 level = tokens.length - 7;
                 tokens = tokens[tokens.length - 6].split(":");
@@ -47,17 +25,17 @@ public class Main {
                 level = tokens.length - 2;
                 tokens = tokens[tokens.length - 1].split(":");
             }
-
             JsonObject jsonObject = createJsonObject(tokens, level);
             jsonArray.add(jsonObject);
         }
 
 
-            JsonObject jo = treeSorter(jsonArray);
+        JsonObject jo = treeSorter(jsonArray);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        System.out.println(gson.toJson(jo));
-        System.out.println(jo);
+        System.out.println(gson.toJson(jo));
+
+        return jo;
     }
 
     public static JsonObject createTopLevelParent(String parent) {
@@ -101,31 +79,30 @@ public class Main {
         ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
         holder.remove(0);
         JsonObject root = depList.get(0).getAsJsonObject();
-        JsonObject prev = root;
-        JsonObject currentRoot = root;
-
-        for (JsonObject current : holder){
-            if(current.get("Level").getAsInt() > prev.get("Level").getAsInt()){
-                prev.get("SubDependency").getAsJsonArray().add(current);
-                prev = current;
-            } else if (current.get("Level").getAsInt() < prev.get("Level").getAsInt()){
-                if(current.get("Level").getAsInt() > currentRoot.get("Level").getAsInt()) {
-                    currentRoot.get("SubDependency").getAsJsonArray().add(current);
-                }else {
-                    root.get("SubDependency").getAsJsonArray().add(current);
-                }
-                currentRoot = current;
-                prev = current;
-            }else{
-                if(currentRoot.get("Level").getAsInt() == current.get("Level").getAsInt()) {
-                    root.get("SubDependency").getAsJsonArray().add(current);
-                }else{
-                    currentRoot.get("SubDependency").getAsJsonArray().add(current);
-                }
-                currentRoot = current;
-                prev = current;
-            }
+        ArrayList<JsonObject> path = new ArrayList<JsonObject>();
+        path.add(root);
+        for (JsonObject current : holder) {
+            path.get((current.get("Level").getAsInt()) - 1).get("SubDependency").getAsJsonArray().add(current);
+            path = new ArrayList<JsonObject>(path.subList(0, current.get("Level").getAsInt()));
+            path.add(current);
         }
         return root;
+    }
+
+    public static ArrayList<String> readFromFile(){
+        ArrayList<String> baseText = new ArrayList<>();
+        try {
+            File textObject = new File("Resources/baseText.txt");
+            Scanner textReader = new Scanner(textObject);
+            while (textReader.hasNextLine()) {
+                String data = textReader.nextLine();
+                data = data.replaceAll("[ ]{2,}", " ");
+                baseText.add(data);
+            }
+            textReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return baseText;
     }
 }

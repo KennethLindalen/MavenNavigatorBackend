@@ -1,4 +1,4 @@
-package xyz.mavennavigator;
+package xyz.mvnconflicts;
 
 import java.util.ArrayList;
 
