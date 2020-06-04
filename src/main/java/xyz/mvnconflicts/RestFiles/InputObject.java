@@ -1,6 +1,6 @@
-package xyz.mvnconflicts;
+package xyz.mvnconflicts.RestFiles;
 
-public class InputObject{
+public class InputObject {
     private String input;
 
     public InputObject(String input) {
@@ -14,4 +14,5 @@ public class InputObject{
     public void setInput(String input) {
         this.input = input;
     }
+
 }

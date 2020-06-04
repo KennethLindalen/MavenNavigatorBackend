@@ -1,10 +1,10 @@
 ### Gjøreliste for utvikling av MavenNavigator
 
 * [ ] Lage server
-    * [ ] Akseptere POST-request
+    * [x] Akseptere POST-request
         * [ ] Lage requesthandler
     * [x] Skaffe server for hosting
-* [ ] Lage nettside
+* [x] Lage nettside
     * [x] Skaffe domene
     * [x] Skaffe server for hosting
     * [x] MVP design
@@ -16,5 +16,5 @@
     * [x] Exceptionhandling
     * [ ] Finne versjonskonflikter
        * [ ] Vise kompileringsrekkefølge for å fikse problemet
-       * [ ] Vise ny og fikset pom-fil(?)
-    
+       * [ ] Finne nyeste(?) versjon av konflikt?
+            * [ ] Vise ny og fikset pom-fil(?)  

@@ -1,4 +1,4 @@
-package xyz.mvnconflicts;
+package xyz.mvnconflicts.Product;
 
 import com.google.gson.JsonObject;
 
