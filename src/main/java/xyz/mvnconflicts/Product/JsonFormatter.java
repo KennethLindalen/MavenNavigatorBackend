@@ -16,6 +16,18 @@ public class JsonFormatter {
         this.baseText = baseText;
     }
 
+    public ArrayList<String> getBaseText() {
+        return baseText;
+    }
+
+    public JsonObject getTree() {
+        return tree;
+    }
+
+    public ArrayList<JsonObject> getJsonList() {
+        return formatToJson();
+    }
+
     public ArrayList<JsonObject> formatToJson() {
         ArrayList<String> baseText = this.baseText;
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
