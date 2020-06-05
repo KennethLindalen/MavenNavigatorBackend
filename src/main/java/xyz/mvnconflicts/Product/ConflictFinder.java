@@ -19,11 +19,11 @@ public class ConflictFinder {
 
         for (int i = 0; i <= input.size() - 1 ; i++) {
             for (int j = i + 1; j <= input.size() - 1; j++) {
-                String iA = input.get(i).get("Artifact").getAsString();
-                String jA = input.get(j).get("Artifact").getAsString();
+                String iA = input.get(i).get("ArtifactId").getAsString();
+                String jA = input.get(j).get("ArtifactId").getAsString();
 
-                String iG = input.get(i).get("GroupID").getAsString();
-                String jG = input.get(j).get("GroupID").getAsString();
+                String iG = input.get(i).get("GroupId").getAsString();
+                String jG = input.get(j).get("GroupId").getAsString();
 
                 String iV = input.get(i).get("Version").getAsString();
                 String jV = input.get(j).get("Version").getAsString();
