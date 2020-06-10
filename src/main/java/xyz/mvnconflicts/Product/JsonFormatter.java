@@ -14,6 +14,7 @@ public class JsonFormatter {
 
     public JsonFormatter(ArrayList<String> baseText) {
         this.baseText = baseText;
+        jsonList = formatToJson();
     }
 
     public ArrayList<String> getBaseText() {
@@ -106,20 +107,4 @@ public class JsonFormatter {
         return root;
     }
 
-    public static ArrayList<String> readFromFile(){
-        ArrayList<String> baseText = new ArrayList<>();
-        try {
-            File textObject = new File("Resources/baseText.txt");
-            Scanner textReader = new Scanner(textObject);
-            while (textReader.hasNextLine()) {
-                String data = textReader.nextLine();
-                data = data.replaceAll("[ ]{2,}", " ");
-                baseText.add(data);
-            }
-            textReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return baseText;
-    }
 }
