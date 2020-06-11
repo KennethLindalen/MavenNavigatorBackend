@@ -1,4 +1,6 @@
-package xyz.mvnconflicts.Extras;
+package xyz.mvnconflicts.Product;
+
+import xyz.mvnconflicts.Rest.DTO.ContactDTO;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,24 +12,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
-public class ContactObject {
+public class Mailer {
+    private ContactDTO contactDTO;
 
-    private String name;
-    private String email;
-    private String message;
-
-    public ContactObject(String name, String email, String message) {
-        this.name = name;
-        this.email = email;
-        this.message = message;
+    public Mailer(ContactDTO contactDTO) {
+        this.contactDTO = contactDTO;
     }
 
-
-    public String getCurrentDate(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
-    }
     public void sendMail(){
         String to = "kennethlindalen@gmail.com";
         String from = "kennethlindalen@gmail.com";
@@ -43,12 +34,16 @@ public class ContactObject {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject("MvnConflicts Contact");
-            message.setText("From: " + name + "\nEmail: " + email + "\nTime: " + getCurrentDate() + "\n \n" + message);
+            message.setText("From: " + contactDTO.getName() +  "\nEmail: " + contactDTO.getEmail() + "\nTime: " + getCurrentDate() + "\n \n" + contactDTO.getMessage());
 
             Transport.send(message);
-            System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
+    }
+    public String getCurrentDate(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }

@@ -6,9 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xyz.mvnconflicts.Extras.ContactObject;
-import xyz.mvnconflicts.Product.ConflictFinder;
-import xyz.mvnconflicts.Product.InputObject;
+import xyz.mvnconflicts.Rest.DTO.ContactDTO;
+import xyz.mvnconflicts.Rest.DTO.InputDTO;
 import xyz.mvnconflicts.Product.JsonFormatter;
 
 import java.util.ArrayList;
@@ -18,18 +17,17 @@ public class RestController {
 
     @PostMapping(value = "/ConflictedTree", consumes = "application/json", produces = "applcation/json")
     @ResponseBody
-    public ArrayList<JsonObject> createTreeAndFindConflicts(@RequestBody InputObject inputObject){
+    public ArrayList<JsonObject> createTreeAndFindConflicts(@RequestBody InputDTO inputObject){
         ArrayList<JsonObject> jsonArray = new ArrayList<>();
-        JsonFormatter jsonFormatter = new JsonFormatter(inputObject.convertToArray());
-        JsonObject jsonTree = jsonFormatter.createSortedTree();
-        jsonArray.add(jsonTree);
+        JsonFormatter jsonFormatter = new JsonFormatter(inputObject.getInput());
+        jsonArray.add(jsonFormatter.getTree());
         return jsonArray;
     }
 
     @PostMapping(value = "/", consumes = "application/json", produces = "applcation/json")
     @ResponseBody
-    public String inputTest(@RequestBody InputObject inputObject){
-        ArrayList<String> test = inputObject.convertToArray();
+    public String inputTest(@RequestBody InputDTO inputObject){
+        ArrayList<String> test = inputObject.getInput();
         for (String s: test
         ) {
             System.out.println(s);
@@ -38,8 +36,8 @@ public class RestController {
     }
 
     @PostMapping(value = "/contact", consumes = "application/json", produces = "applcation/json")
-    public ResponseEntity<String> contact(@RequestBody ContactObject contactObject){
-        contactObject.sendMail();
+    public ResponseEntity<String> contact(@RequestBody ContactDTO contactDTO){
+        contactDTO.sendMail();
         return new ResponseEntity<>("Thanks for contacting me!", HttpStatus.OK);
     }
 

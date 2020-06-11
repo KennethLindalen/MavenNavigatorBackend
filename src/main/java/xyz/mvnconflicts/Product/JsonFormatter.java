@@ -10,23 +10,27 @@ import java.util.Scanner;
 public class JsonFormatter {
     private ArrayList<String> baseText;
     private JsonObject tree;
-    private ArrayList<JsonObject> jsonList;
+    private static ArrayList<JsonObject> jsonList;
+
+    public JsonObject getTree() {
+        return tree;
+    }
 
     public JsonFormatter(ArrayList<String> baseText) {
+        for(String s : baseText){
+            s = s.replaceAll("[ ]{2,}", " ");
+        }
         this.baseText = baseText;
         jsonList = formatToJson();
+        tree = treeSorter(jsonList);
     }
 
     public ArrayList<String> getBaseText() {
         return baseText;
     }
 
-    public JsonObject getTree() {
-        return tree;
-    }
-
     public ArrayList<JsonObject> getJsonList() {
-        return formatToJson();
+        return jsonList;
     }
 
     public ArrayList<JsonObject> formatToJson() {
@@ -58,7 +62,7 @@ public class JsonFormatter {
 
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
-        String[] tokens = holder[1].split(":");
+        String[] tokens = holder[0].split(":");
 
         JsonObject object = new JsonObject();
 
