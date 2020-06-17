@@ -8,9 +8,7 @@ public class InputDTO {
     public InputDTO(ArrayList<String> input) {
         this.input = input;
     }
-    public InputDTO() {
-
-    }
+    public InputDTO() {}
 
     public void setInput(ArrayList<String> input) {
         this.input = input;

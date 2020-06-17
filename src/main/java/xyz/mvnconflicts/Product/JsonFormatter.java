@@ -8,29 +8,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JsonFormatter {
-    private ArrayList<String> baseText;
-    private JsonObject tree;
-    private static ArrayList<JsonObject> jsonList;
-
-    public JsonObject getTree() {
-        return tree;
-    }
+    public ArrayList<String> baseText;
 
     public JsonFormatter(ArrayList<String> baseText) {
-        for(String s : baseText){
-            s = s.replaceAll("[ ]{2,}", " ");
-        }
         this.baseText = baseText;
-        jsonList = formatToJson();
-        tree = treeSorter(jsonList);
     }
 
     public ArrayList<String> getBaseText() {
         return baseText;
-    }
-
-    public ArrayList<JsonObject> getJsonList() {
-        return jsonList;
     }
 
     public ArrayList<JsonObject> formatToJson() {
@@ -44,10 +29,10 @@ public class JsonFormatter {
             String[] tokens = baseText.get(i).split(" ");
             int level;
             if (baseText.get(i).contains("(version selected from constraint")) {
-                level = tokens.length - 7;
+                level = tokens.length - 6;
                 tokens = tokens[tokens.length - 6].split(":");
             } else {
-                level = tokens.length - 2;
+                level = tokens.length - 1;
                 tokens = tokens[tokens.length - 1].split(":");
             }
             JsonObject jsonObject = createJsonObject(tokens, level);
@@ -56,9 +41,6 @@ public class JsonFormatter {
             return jsonArray;
     }
 
-    public JsonObject createSortedTree(){
-        return treeSorter(jsonList);
-    }
 
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
@@ -97,18 +79,21 @@ public class JsonFormatter {
         return object;
     }
 
-    public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
-        ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
-        holder.remove(0);
-        JsonObject root = depList.get(0).getAsJsonObject();
-        ArrayList<JsonObject> path = new ArrayList<JsonObject>();
-        path.add(root);
-        for (JsonObject current : holder) {
-            path.get((current.get("Level").getAsInt()) - 1).get("SubDependency").getAsJsonArray().add(current);
-            path = new ArrayList<JsonObject>(path.subList(0, current.get("Level").getAsInt()));
-            path.add(current);
-        }
-        return root;
+    public void setBaseText(ArrayList<String> baseText) {
+        this.baseText = baseText;
     }
 
+public static String treeSorter(ArrayList<JsonObject> depList) {
+    ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
+    holder.remove(0);
+    JsonObject root = depList.get(0).getAsJsonObject();
+    ArrayList<JsonObject> path = new ArrayList<>();
+    path.add(root);
+    for (JsonObject current : holder){
+        path.get(current.get("Level").getAsInt()-1).get("SubDependency").getAsJsonArray().add(current);
+        path = new ArrayList<>(path.subList(0, current.get("Level").getAsInt()));
+        path.add(current);
+    }
+    return root.toString();
+}
 }

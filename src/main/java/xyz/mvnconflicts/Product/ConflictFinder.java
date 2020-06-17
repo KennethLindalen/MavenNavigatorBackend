@@ -18,14 +18,15 @@ public class ConflictFinder {
         JsonArray conflictSets = new JsonArray();
 
         for (int i = 0; i <= input.size() - 1 ; i++) {
+
+            String iV = input.get(i).get("Version").getAsString();
+            String iG = input.get(i).get("GroupId").getAsString();
+            String iA = input.get(i).get("ArtifactId").getAsString();
+
             for (int j = i + 1; j <= input.size() - 1; j++) {
-                String iA = input.get(i).get("ArtifactId").getAsString();
+
                 String jA = input.get(j).get("ArtifactId").getAsString();
-
-                String iG = input.get(i).get("GroupId").getAsString();
                 String jG = input.get(j).get("GroupId").getAsString();
-
-                String iV = input.get(i).get("Version").getAsString();
                 String jV = input.get(j).get("Version").getAsString();
 
                 if (iA.equals(jA) && iG.equals(jG) && iV.equals(jV)){
