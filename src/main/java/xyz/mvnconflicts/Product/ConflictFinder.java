@@ -13,9 +13,9 @@ public class ConflictFinder {
         this.input = input;
     }
 
-    public JsonArray findConflicts(){
-        JsonArray conflicts = new JsonArray();
-        JsonArray conflictSets = new JsonArray();
+    public ArrayList<ArrayList<String>> findConflicts(){
+        ArrayList<ArrayList<String>> conflicts = new ArrayList<>();
+        ArrayList<String> conflictSets = new ArrayList<String>();
 
         for (int i = 0; i <= input.size() - 1 ; i++) {
 
@@ -31,9 +31,9 @@ public class ConflictFinder {
 
                 if (iA.equals(jA) && iG.equals(jG) && iV.equals(jV)){
                     if(!(conflictSets.contains(input.get(i)))){
-                        conflictSets.add(input.get(i));
+                        conflictSets.add(input.get(i).getAsString());
                     }
-                    conflictSets.add(input.get(j));
+                    conflictSets.add(input.get(j).getAsString());
                 }
             }
             if(conflictSets.size() >= 2){

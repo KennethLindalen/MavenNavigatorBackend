@@ -83,7 +83,7 @@ public class JsonFormatter {
         this.baseText = baseText;
     }
 
-public static String treeSorter(ArrayList<JsonObject> depList) {
+public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
     ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
     holder.remove(0);
     JsonObject root = depList.get(0).getAsJsonObject();
@@ -94,6 +94,6 @@ public static String treeSorter(ArrayList<JsonObject> depList) {
         path = new ArrayList<>(path.subList(0, current.get("Level").getAsInt()));
         path.add(current);
     }
-    return root.toString();
+    return root;
 }
 }

@@ -34,7 +34,7 @@ public class Mailer {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject("MvnConflicts Contact");
-            message.setText("From: " + contactDTO.getName() +  "\nEmail: " + contactDTO.getEmail() + "\nTime: " + getCurrentDate() + "\n \n" + contactDTO.getMessage());
+            message.setText("From: " + this.contactDTO.getName() +  "\nEmail: " + this.contactDTO.getEmail() + "\nTime: " + getCurrentDate() + "\n \n" + this.contactDTO.getMessage());
 
             Transport.send(message);
         } catch (MessagingException mex) {
