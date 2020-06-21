@@ -1,9 +1,11 @@
 package xyz.mvnconflicts.Product;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import xyz.mvnconflicts.Product.POJO.ConflictChildPOJO;
+import xyz.mvnconflicts.Product.POJO.ConflictMasterPOJO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ConflictFinder {
 
@@ -13,33 +15,48 @@ public class ConflictFinder {
         this.input = input;
     }
 
-    public ArrayList<ArrayList<String>> findConflicts(){
-        ArrayList<ArrayList<String>> conflicts = new ArrayList<>();
-        ArrayList<String> conflictSets = new ArrayList<String>();
-
-        for (int i = 0; i <= input.size() - 1 ; i++) {
+    public  ArrayList<ConflictMasterPOJO> findConflicts() {
+        ArrayList<ConflictMasterPOJO> conflictList = new ArrayList<ConflictMasterPOJO>();
+        for (int i = 0; i <= input.size() - 1; i++) {
 
             String iV = input.get(i).get("Version").getAsString();
             String iG = input.get(i).get("GroupId").getAsString();
             String iA = input.get(i).get("ArtifactId").getAsString();
-
+            ConflictMasterPOJO conflictMasterPOJO = new ConflictMasterPOJO();
+            conflictMasterPOJO.setFirstOccurance(input.get(i).getAsJsonObject());
             for (int j = i + 1; j <= input.size() - 1; j++) {
 
                 String jA = input.get(j).get("ArtifactId").getAsString();
                 String jG = input.get(j).get("GroupId").getAsString();
                 String jV = input.get(j).get("Version").getAsString();
 
-                if (iA.equals(jA) && iG.equals(jG) && iV.equals(jV)){
-                    if(!(conflictSets.contains(input.get(i)))){
-                        conflictSets.add(input.get(i).getAsString());
-                    }
-                    conflictSets.add(input.get(j).getAsString());
+
+                if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
+                    conflictMasterPOJO.addConflicts(input.get(j).getAsJsonObject());
+
                 }
             }
-            if(conflictSets.size() >= 2){
-                conflicts.add(conflictSets);
+                if (conflictMasterPOJO.getConflicts().size() != 0){
+                    conflictList.add(conflictMasterPOJO);
+                }
+
+        }
+        return conflictList;
+    }
+
+    public ArrayList<JsonObject> findParents(ArrayList<JsonObject> input, int index) {
+        int counter = 0;
+        ArrayList<JsonObject> holder = new ArrayList<>();
+        for (int i = index; i >= input.size() - 1; i--) {
+            if (input.get(i).get("Level").getAsInt() <= 1){
+                holder.add(input.get(i).getAsJsonObject());
+                break;
+            }
+            else{
+                holder.add(input.get(i));
             }
         }
-        return conflicts;
+        Collections.reverse(holder);
+        return holder;
     }
 }

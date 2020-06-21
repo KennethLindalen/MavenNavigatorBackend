@@ -2,20 +2,14 @@ package xyz.mvnconflicts.Product;
 
 import com.google.gson.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class JsonFormatter {
     public ArrayList<String> baseText;
 
     public JsonFormatter(ArrayList<String> baseText) {
         this.baseText = baseText;
-    }
-
-    public ArrayList<String> getBaseText() {
-        return baseText;
     }
 
     public ArrayList<JsonObject> formatToJson() {
@@ -38,9 +32,22 @@ public class JsonFormatter {
             JsonObject jsonObject = createJsonObject(tokens, level);
             jsonArray.add(jsonObject);
         }
-            return jsonArray;
+        return jsonArray;
     }
 
+    public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
+        ArrayList<JsonObject> holder = new ArrayList<>(depList);
+        holder.remove(0);
+        JsonObject root = depList.get(0).getAsJsonObject();
+        ArrayList<JsonObject> path = new ArrayList<>();
+        path.add(root);
+        for (JsonObject current : holder) {
+            path.get(current.get("Level").getAsInt() - 1).get("SubDependency").getAsJsonArray().add(current);
+            path = new ArrayList<>(path.subList(0, current.get("Level").getAsInt()));
+            path.add(current);
+        }
+        return root;
+    }
 
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
@@ -79,21 +86,5 @@ public class JsonFormatter {
         return object;
     }
 
-    public void setBaseText(ArrayList<String> baseText) {
-        this.baseText = baseText;
-    }
 
-public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
-    ArrayList<JsonObject> holder = new ArrayList<JsonObject>(depList);
-    holder.remove(0);
-    JsonObject root = depList.get(0).getAsJsonObject();
-    ArrayList<JsonObject> path = new ArrayList<>();
-    path.add(root);
-    for (JsonObject current : holder){
-        path.get(current.get("Level").getAsInt()-1).get("SubDependency").getAsJsonArray().add(current);
-        path = new ArrayList<>(path.subList(0, current.get("Level").getAsInt()));
-        path.add(current);
-    }
-    return root;
-}
 }

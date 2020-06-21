@@ -1,4 +1,4 @@
-package xyz.mvnconflicts.Product;
+package xyz.mvnconflicts.Extras;
 
 import xyz.mvnconflicts.Rest.DTO.ContactDTO;
 
