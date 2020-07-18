@@ -1,6 +1,5 @@
 package xyz.mvnconflicts.Rest;
 
-import com.google.gson.JsonObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.mvnconflicts.Product.ConflictFinder;
-import xyz.mvnconflicts.Product.POJO.ConflictMasterPOJO;
 import xyz.mvnconflicts.Rest.DTO.ContactDTO;
 import xyz.mvnconflicts.Rest.DTO.InputDTO;
 import xyz.mvnconflicts.Product.JsonFormatter;
@@ -33,9 +31,8 @@ public class RestController {
         }
         JsonFormatter jsonFormatter = new JsonFormatter(jArray);
         ConflictFinder conflictFinder = new ConflictFinder(new ArrayList<>(jsonFormatter.formatToJson()));
-        ArrayList<ConflictMasterPOJO> conflicts = new ArrayList<>(conflictFinder.findConflicts());
-
-        return new DefaultResponsePOJO(JsonFormatter.treeSorter(jsonFormatter.formatToJson()), conflicts);
+        return new DefaultResponsePOJO(JsonFormatter.treeSorter(jsonFormatter.formatToJson()),
+                new ArrayList<>(conflictFinder.findConflicts()));
     }
 
     @PostMapping(value = "/contact", consumes = "application/json", produces = "application/json")

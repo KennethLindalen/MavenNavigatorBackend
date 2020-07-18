@@ -12,6 +12,7 @@ public class JsonFormatter {
         this.baseText = baseText;
     }
 
+
     public ArrayList<JsonObject> formatToJson() {
         ArrayList<String> baseText = this.baseText;
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
@@ -35,7 +36,7 @@ public class JsonFormatter {
         return jsonArray;
     }
 
-    public static JsonObject treeSorter(ArrayList<JsonObject> depList) {
+    public static JsonObject treeSorter(ArrayList<JsonObject> depList) throws NullPointerException{
         ArrayList<JsonObject> holder = new ArrayList<>(depList);
         holder.remove(0);
         JsonObject root = depList.get(0).getAsJsonObject();
