@@ -1,13 +1,10 @@
 package xyz.mvnconflicts.Rest;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.mvnconflicts.Product.ConflictFinder;
 import xyz.mvnconflicts.Product.JsonFormatter;
-import xyz.mvnconflicts.Rest.DTO.ContactDTO;
 import xyz.mvnconflicts.Rest.DTO.InputDTO;
 import xyz.mvnconflicts.Rest.POJO.DefaultResponsePOJO;
 
@@ -32,11 +29,4 @@ public class RestController {
         return new DefaultResponsePOJO(JsonFormatter.treeSorter(jsonFormatter.formatToJson()),
                 new ArrayList<>(conflictFinder.findConflicts()));
     }
-
-    @PostMapping(value = "/contact", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> contact(@RequestBody ContactDTO contactDTO) {
-        System.out.println(contactDTO);
-        return new ResponseEntity<>("Thanks for contacting me!", HttpStatus.OK);
-    }
-
 }
