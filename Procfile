@@ -1,1 +1,0 @@
-web: java -Dserver.port=$PORT -jar tokenizedMvnSorter/target/tokenizedmvnsorter-1.0-SNAPSHOT.jar
