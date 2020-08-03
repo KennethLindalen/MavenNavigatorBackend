@@ -2,7 +2,7 @@
 
 * [ ] Lage server
     * [x] Akseptere POST-request
-        * [ ] Lage requesthandler
+        * [x] Lage requesthandler
     * [x] Skaffe server for hosting
 * [x] Lage nettside
     * [x] Skaffe domene
@@ -16,6 +16,6 @@
     * [x] Exceptionhandling
     * [ ] Versjonskonflikter
        * [x] Finne versjonskonflikter
-       * [ ] Vise kompileringsrekkefølge for å fikse problemet
+       * [x] Vise kompileringsrekkefølge for å fikse problemet
        * [ ] Finne nyeste(?) versjon av konflikt?
             * [ ] Vise ny og fikset pom-fil(?)  
