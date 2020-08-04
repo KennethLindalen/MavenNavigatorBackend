@@ -12,7 +12,7 @@ public class JsonFormatter {
         this.baseText = baseText;
     }
 
-
+    // Tokenizing input arraylist and transforms them into JSON objects
     public ArrayList<JsonObject> formatToJson() {
         ArrayList<String> baseText = this.baseText;
         ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
@@ -35,7 +35,7 @@ public class JsonFormatter {
         }
         return jsonArray;
     }
-
+// Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
     public static JsonObject treeSorter(ArrayList<JsonObject> depList) throws NullPointerException{
         ArrayList<JsonObject> holder = new ArrayList<>(depList);
         holder.remove(0);
@@ -49,7 +49,7 @@ public class JsonFormatter {
         }
         return root;
     }
-
+// Creates the JSON object for the first index of baseText
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
         String[] tokens = holder[0].split(":");
@@ -67,7 +67,7 @@ public class JsonFormatter {
 
         return object;
     }
-
+// Transforms each index from baseText into a json object
     public static JsonObject createJsonObject(String[] tokens, int level) {
 
         JsonObject object = new JsonObject();

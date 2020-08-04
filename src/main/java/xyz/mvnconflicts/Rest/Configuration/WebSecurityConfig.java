@@ -15,16 +15,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        // Accepts only requests from https
         http.requiresChannel()
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
 
+        // Disable cors configuration and csrf protection
         http.cors().and().csrf().disable();
-
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-
     }
 
+    // Cors configuration allowing all requests
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -3,8 +3,9 @@ package xyz.mvnconflicts.Product.POJO;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-
+// Default POJO for conflicts
 public class ConflictPOJO {
+    // firstOccurance is the object that is all the remaining objects are compared to
     JsonObject firstOccurance;
     JsonObject firstOccuranceJsonMap = new JsonObject();
     ArrayList<JsonObject> conflicts = new ArrayList<>();

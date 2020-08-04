@@ -17,10 +17,12 @@ public class RestController {
     @ResponseBody
     public DefaultResponsePOJO treeBuilderConflictFinder(@RequestBody InputDTO InputDTO) {
         ArrayList<String> jArray = new ArrayList<>();
+        // Replaces amounts of whitespace from 2< to 1
         for (String s : InputDTO.getInput()) {
             s = s.replaceAll("[ ]{2,}", " ");
             jArray.add(s);
         }
+        // Removes last index of input if that index is empty
         if (jArray.get(jArray.size() - 1).equals("")) {
             jArray.remove(jArray.size() - 1);
         }

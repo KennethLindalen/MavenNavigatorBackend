@@ -2,6 +2,7 @@ package xyz.mvnconflicts.Rest.DTO;
 
 import java.util.ArrayList;
 
+// Input DTO for requests made by clients
 public class InputDTO {
     private ArrayList<String> input;
 

@@ -5,6 +5,7 @@ import xyz.mvnconflicts.Product.POJO.ConflictPOJO;
 
 import java.util.ArrayList;
 
+// Default POJO for data returned from the request
 public class DefaultResponsePOJO {
 
     public JsonObject jsonTree;

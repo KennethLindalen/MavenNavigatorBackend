@@ -8,6 +8,7 @@ import java.util.Collections;
 
 import static xyz.mvnconflicts.Product.JsonFormatter.treeSorter;
 
+// Finds conflicts between json objects in ArrayList created by JsonFormatter
 public class ConflictFinder {
 
     private final ArrayList<JsonObject> input;
@@ -33,7 +34,7 @@ public class ConflictFinder {
                 String jA = input.get(j).get("ArtifactId").getAsString();
                 String jG = input.get(j).get("GroupId").getAsString();
                 String jV = input.get(j).get("Version").getAsString();
-
+                // checks if ArtifactId and GroupId are matches and if version is not equal to object compared to
                 if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
                     conflictPOJO.setFirstOccuranceJsonMap(treeSorter(findParentDependencies(i)));
                     conflictPOJO.addConflicts(input.get(j).getAsJsonObject());
@@ -47,7 +48,7 @@ public class ConflictFinder {
         }
         return conflictList;
     }
-
+// Finds parent dependencies to seperate each project by itself
     public ArrayList<JsonObject> findParentDependencies(int index) {
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
 
@@ -59,13 +60,11 @@ public class ConflictFinder {
                 break;
             }
         }
-
         Collections.reverse(conflictMap);
         for (JsonObject jo : conflictMap
         ) {
             jo.addProperty("Level", jo.get("Level").getAsInt() - 1);
         }
-
         for (int i = 1; i <= conflictMap.size() - 1; i++) {
             if (conflictMap.get(i).get("Level").getAsInt() == conflictMap.get(i - 1).get("Level").getAsInt() + 2) {
                 conflictMap.get(i).addProperty("Level", conflictMap.get(i).get("Level").getAsInt() - 1);
