@@ -15,7 +15,7 @@ public class JsonFormatter {
     // Tokenizing input arraylist and transforms them into JSON objects
     public ArrayList<JsonObject> formatToJson() {
         ArrayList<String> baseText = this.baseText;
-        ArrayList<JsonObject> jsonArray = new ArrayList<JsonObject>();
+        ArrayList<JsonObject> jsonArray = new ArrayList<>();
 
         JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
         jsonArray.add(topLevelParentObject);
