@@ -17,8 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // Accepts only requests from https
-        http.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+        http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
 
         // Disable cors configuration and csrf protection

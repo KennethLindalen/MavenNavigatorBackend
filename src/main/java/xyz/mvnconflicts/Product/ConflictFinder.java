@@ -47,7 +47,7 @@ public class ConflictFinder {
                     conflictPOJO.addConflicts(input.get(j).getAsJsonObject());
                     conflictPOJO.addJsonMap(treeSorter(findParentDependencies(j)));
 
-                    if (conflictPOJO.getConflicts().size() >= 1) {
+                    if (!(conflictPOJO.getConflicts().isEmpty())) {
                         conflictList.add(conflictPOJO);
                     }
                 }
@@ -55,21 +55,26 @@ public class ConflictFinder {
         }
         return conflictList;
     }
-// Finds parent dependencies to seperate each project by itself
+
+    // Finds parent dependencies to seperate each project by itself
     public ArrayList<JsonObject> findParentDependencies(int index) {
+
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
 
-        for (int k = index; k > 0; k--) {
+        for (int k = index + 1; k > 0; k--) {
             if (!(input.get(k).get(LEVEL).getAsInt() == 1)) {
-                conflictMap.add(input.get(k));
+                if (input.get(k).get(LEVEL).getAsInt() != input.get(k - 1).get(LEVEL).getAsInt()){
+                    conflictMap.add(input.get(k));
+                }
             } else {
                 conflictMap.add(input.get(k));
                 break;
             }
         }
+
         Collections.reverse(conflictMap);
-        for (JsonObject jo : conflictMap
-        ) {
+
+        for (JsonObject jo : conflictMap) {
             jo.addProperty(LEVEL, jo.get(LEVEL).getAsInt() - 1);
         }
         for (int i = 1; i <= conflictMap.size() - 1; i++) {
