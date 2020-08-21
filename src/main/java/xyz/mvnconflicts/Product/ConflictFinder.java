@@ -17,8 +17,6 @@ public class ConflictFinder {
     private static final String ARTIFACT_ID = "ArtifactId";
     private static final String LEVEL = "Level";
 
-    // ??
-
 
     public ConflictFinder(ArrayList<JsonObject> input) {
         this.input = input;
