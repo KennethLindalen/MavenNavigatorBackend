@@ -39,14 +39,13 @@ public class JsonFormatter {
 
     // Tokenizing input arraylist and transforms them into JSON objects
     public JsonFormatter formatToJson() {
-        ArrayList<String> baseText = this.baseText;
-        JsonObject topLevelParentObject = createTopLevelParent(baseText.get(0));
+        JsonObject topLevelParentObject = createTopLevelParent(this.baseText.get(0));
         this.jsonArray.add(topLevelParentObject);
 
-        for (int i = 1; i <= baseText.size() - 1; i++) {
-            String[] tokens = baseText.get(i).split(" ");
+        for (int i = 1; i <= this.baseText.size() - 1; i++) {
+            String[] tokens = this.baseText.get(i).split(" ");
             int level;
-            if (baseText.get(i).contains("(version selected from constraint")) {
+            if (this.baseText.get(i).contains("(version selected from constraint")) {
                 level = tokens.length - 6;
                 tokens = tokens[tokens.length - 6].split(":");
             } else {
@@ -87,7 +86,7 @@ public class JsonFormatter {
         }
     }
 
-    // Creates the JSON object for the first index of baseText
+    // Creates the JSON object for the first index of this.baseText
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
         String[] tokens = holder[0].split(":");
@@ -105,7 +104,7 @@ public class JsonFormatter {
 
         return object;
     }
-// Transforms each index from baseText into a json object
+// Transforms each index from this.baseText into a json object
     public static JsonObject createJsonObject(String[] tokens, int level) {
 
         JsonObject object = new JsonObject();
