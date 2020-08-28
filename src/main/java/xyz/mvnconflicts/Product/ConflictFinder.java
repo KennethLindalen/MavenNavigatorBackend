@@ -6,24 +6,36 @@ import xyz.mvnconflicts.Product.POJO.ConflictPOJO;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static xyz.mvnconflicts.Product.JsonFormatter.treeSorter;
+import static xyz.mvnconflicts.Product.JsonFormatter.treeSort;
 
 // Finds conflicts between json objects in ArrayList created by JsonFormatter
 public class ConflictFinder {
 
-    private final ArrayList<JsonObject> input;
+//    Input fields
+    public ArrayList<JsonObject> input;
+
+//    Output fields
+    ArrayList<ConflictPOJO> conflictList;
+
     private static final String VERSION = "Version";
     private static final String GROUP_ID = "GroupId";
     private static final String ARTIFACT_ID = "ArtifactId";
     private static final String LEVEL = "Level";
 
 
-    public ConflictFinder(ArrayList<JsonObject> input) {
+    public ConflictFinder() {
+    }
+
+    public void setInput(ArrayList<JsonObject> input) {
         this.input = input;
     }
 
-    public ArrayList<ConflictPOJO> findConflicts() {
-        ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
+    public ArrayList<ConflictPOJO> getConflicts() {
+        return conflictList;
+    }
+
+    public ConflictFinder findConflicts() {
+
         for (int i = 1; i <= input.size() - 1; i++) {
 
             String iV = input.get(i).get(VERSION).getAsString();
@@ -41,17 +53,17 @@ public class ConflictFinder {
                 String jV = input.get(j).get(VERSION).getAsString();
                 // checks if ArtifactId and GroupId are matches and if version is not equal to object compared to
                 if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
-                    conflictPOJO.setFirstOccuranceJsonMap(treeSorter(findParentDependencies(i)));
+                    conflictPOJO.setFirstOccuranceJsonMap(treeSort(findParentDependencies(i)));
                     conflictPOJO.addConflicts(input.get(j).getAsJsonObject());
-                    conflictPOJO.addJsonMap(treeSorter(findParentDependencies(j)));
+                    conflictPOJO.addJsonMap(treeSort(findParentDependencies(j)));
 
                     if (!(conflictPOJO.getConflicts().isEmpty())) {
-                        conflictList.add(conflictPOJO);
+                        this.conflictList.add(conflictPOJO);
                     }
                 }
             }
         }
-        return conflictList;
+        return this;
     }
 
     // Finds parent dependencies to seperate each project by itself

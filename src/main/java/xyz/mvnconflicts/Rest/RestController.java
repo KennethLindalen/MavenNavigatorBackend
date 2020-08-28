@@ -26,9 +26,12 @@ public class RestController {
         if (jArray.get(jArray.size() - 1).equals("")) {
             jArray.remove(jArray.size() - 1);
         }
-        JsonFormatter jsonFormatter = new JsonFormatter(jArray);
-        ConflictFinder conflictFinder = new ConflictFinder(new ArrayList<>(jsonFormatter.formatToJson()));
-        return new DefaultResponsePOJO(JsonFormatter.treeSorter(jsonFormatter.formatToJson()),
-                new ArrayList<>(conflictFinder.findConflicts()));
+
+        JsonFormatter jsonFormatter = new JsonFormatter();
+        ConflictFinder conflictFinder = new ConflictFinder();
+        conflictFinder.setInput(jsonFormatter.formatToJson().getJsonArray());
+        jsonFormatter.setBaseText(jArray);
+        return new DefaultResponsePOJO(jsonFormatter.formatToJson().treeSort().getJsonTree(),
+                conflictFinder.findConflicts().getConflicts());
     }
 }
