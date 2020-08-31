@@ -12,10 +12,10 @@ import static xyz.mvnconflicts.Product.JsonFormatter.treeSort;
 public class ConflictFinder {
 
 //    Input fields
-    public ArrayList<JsonObject> input;
+    public ArrayList<JsonObject> input = new ArrayList<>();
 
 //    Output fields
-    ArrayList<ConflictPOJO> conflictList;
+    ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
 
     private static final String VERSION = "Version";
     private static final String GROUP_ID = "GroupId";

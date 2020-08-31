@@ -27,11 +27,12 @@ public class RestController {
             jArray.remove(jArray.size() - 1);
         }
 
-        JsonFormatter jsonFormatter = new JsonFormatter().formatToJson();
-        ConflictFinder conflictFinder = new ConflictFinder();
+        JsonFormatter jsonFormatter = new JsonFormatter();
+        jsonFormatter.setBaseText(jArray).formatToJson();
 
+        ConflictFinder conflictFinder = new ConflictFinder();
         conflictFinder.setInput(jsonFormatter.getJsonArray());
-        jsonFormatter.setBaseText(jArray);
+
 
         return new DefaultResponsePOJO(jsonFormatter.treeSort().getJsonTree(),
                 conflictFinder.findConflicts().getConflicts());

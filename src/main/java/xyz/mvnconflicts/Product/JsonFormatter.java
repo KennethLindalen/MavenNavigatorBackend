@@ -10,8 +10,8 @@ public class JsonFormatter {
     public ArrayList<String> baseText;
 
 //    Output fields
-    public ArrayList<JsonObject> jsonArray;
-    public JsonObject jsonTree;
+    public ArrayList<JsonObject> jsonArray = new ArrayList<>();
+    public JsonObject jsonTree = new JsonObject();
 
     private static final String VERSION = "Version";
     private static final String GROUP_ID = "GroupId";
@@ -33,14 +33,14 @@ public class JsonFormatter {
         return jsonTree;
     }
 
-    public void setBaseText(ArrayList<String> baseText) {
+    public JsonFormatter setBaseText(ArrayList<String> baseText) {
         this.baseText = baseText;
+        return this;
     }
 
     // Tokenizing input arraylist and transforms them into JSON objects
     public JsonFormatter formatToJson() {
-        JsonObject topLevelParentObject = createTopLevelParent(this.baseText.get(0));
-        this.jsonArray.add(topLevelParentObject);
+        this.jsonArray.add(createTopLevelParent(this.baseText.get(0)));
 
         for (int i = 1; i <= this.baseText.size() - 1; i++) {
             String[] tokens = this.baseText.get(i).split(" ");
@@ -62,7 +62,13 @@ public class JsonFormatter {
         ArrayList<JsonObject> holder = new ArrayList<>(depList);
         holder.remove(0);
         JsonObject root = depList.get(0).getAsJsonObject();
-        pathHandler(holder, root);
+        ArrayList<JsonObject> path = new ArrayList<>();
+        path.add(root);
+        for (JsonObject current : holder) {
+            path.get(current.get(LEVEL).getAsInt() - 1).get(SUB_DEPENDENCY).getAsJsonArray().add(current);
+            path = new ArrayList<>(path.subList(0, current.get(LEVEL).getAsInt()));
+            path.add(current);
+        }
         return root;
     }
 
@@ -71,12 +77,6 @@ public class JsonFormatter {
         ArrayList<JsonObject> holder = new ArrayList<>(this.jsonArray);
         holder.remove(0);
         JsonObject root = this.jsonArray.get(0).getAsJsonObject();
-        pathHandler(holder, root);
-        this.jsonTree = root;
-        return this;
-    }
-
-    private static void pathHandler(ArrayList<JsonObject> holder, JsonObject root) {
         ArrayList<JsonObject> path = new ArrayList<>();
         path.add(root);
         for (JsonObject current : holder) {
@@ -84,7 +84,10 @@ public class JsonFormatter {
             path = new ArrayList<>(path.subList(0, current.get(LEVEL).getAsInt()));
             path.add(current);
         }
+        this.jsonTree = root;
+        return this;
     }
+
 
     // Creates the JSON object for the first index of this.baseText
     public static JsonObject createTopLevelParent(String parent) {
