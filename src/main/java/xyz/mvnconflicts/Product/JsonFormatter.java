@@ -58,7 +58,7 @@ public class JsonFormatter {
         return this;
     }
 // Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
-    public static JsonObject treeSort(ArrayList<JsonObject> depList) throws NullPointerException{
+    public static JsonObject createJsonTree(ArrayList<JsonObject> depList) throws NullPointerException{
         ArrayList<JsonObject> holder = new ArrayList<>(depList);
         holder.remove(0);
         JsonObject root = depList.get(0).getAsJsonObject();
@@ -73,7 +73,7 @@ public class JsonFormatter {
     }
 
     // Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
-    public JsonFormatter treeSort() throws NullPointerException{
+    public JsonFormatter createJsonTree() throws NullPointerException{
         ArrayList<JsonObject> holder = new ArrayList<>(this.jsonArray);
         holder.remove(0);
         JsonObject root = this.jsonArray.get(0).getAsJsonObject();

@@ -34,7 +34,7 @@ public class RestController {
         conflictFinder.setInput(jsonFormatter.getJsonArray());
 
 
-        return new DefaultResponsePOJO(jsonFormatter.treeSort().getJsonTree(),
+        return new DefaultResponsePOJO(jsonFormatter.createJsonTree().getJsonTree(),
                 conflictFinder.findConflicts().getConflicts());
     }
 }

@@ -6,7 +6,7 @@ import xyz.mvnconflicts.Product.POJO.ConflictPOJO;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static xyz.mvnconflicts.Product.JsonFormatter.treeSort;
+import static xyz.mvnconflicts.Product.JsonFormatter.createJsonTree;
 
 // Finds conflicts between json objects in ArrayList created by JsonFormatter
 public class ConflictFinder {
@@ -53,9 +53,9 @@ public class ConflictFinder {
                 String jV = input.get(j).get(VERSION).getAsString();
                 // checks if ArtifactId and GroupId are matches and if version is not equal to object compared to
                 if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
-                    conflictPOJO.setFirstOccuranceJsonMap(treeSort(findParentDependencies(i)));
+                    conflictPOJO.setFirstOccuranceJsonMap(createJsonTree(findParentDependencies(i)));
                     conflictPOJO.addConflicts(input.get(j).getAsJsonObject());
-                    conflictPOJO.addJsonMap(treeSort(findParentDependencies(j)));
+                    conflictPOJO.addJsonMap(createJsonTree(findParentDependencies(j)));
 
                     if (!(conflictPOJO.getConflicts().isEmpty())) {
                         this.conflictList.add(conflictPOJO);
