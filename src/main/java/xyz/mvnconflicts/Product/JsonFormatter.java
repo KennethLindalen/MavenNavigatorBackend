@@ -9,9 +9,6 @@ public class JsonFormatter {
     //    Input fields
     public ArrayList<String> baseText;
 
-    // Temp fields
-    ArrayList<JsonObject> holder = new ArrayList<>();
-
     //    Output fields
     public ArrayList<JsonObject> jsonArray = new ArrayList<>();
     public JsonObject jsonTree = new JsonObject();
@@ -31,13 +28,11 @@ public class JsonFormatter {
     public ArrayList<JsonObject> getJsonArray() {
         return jsonArray;
     }
-    public ArrayList<JsonObject> getHolder() {
-        return holder;
-    }
 
     public JsonObject getJsonTree() {
         return jsonTree;
     }
+
 
     public JsonFormatter setBaseText(ArrayList<String> baseText) {
         this.baseText = baseText;
@@ -62,19 +57,17 @@ public class JsonFormatter {
             this.jsonArray.add(jsonObject);
         }
 
-        for (JsonObject jo : jsonArray) {
-            this.holder.add(jo.deepCopy());
-        }
-        this.holder.remove(0);
         return this;
     }
 
     // Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
     public JsonFormatter createJsonTree() {
-        JsonObject root = holder.get(0).getAsJsonObject();
+        ArrayList<JsonObject> holder = new ArrayList<>(jsonArray);
+        holder.remove(0);
+        JsonObject root = jsonArray.get(0).getAsJsonObject();
         ArrayList<JsonObject> path = new ArrayList<>();
         path.add(root);
-        for (JsonObject current : this.holder) {
+        for (JsonObject current : holder) {
             path.get(current.get(LEVEL).getAsInt() - 1).get(SUB_DEPENDENCY).getAsJsonArray().add(current);
             path = new ArrayList<>(path.subList(0, current.get(LEVEL).getAsInt()));
             path.add(current);

@@ -32,7 +32,7 @@ public class RestController {
         jsonFormatter.setBaseText(inputArray).formatToJson();
 
         ConflictFinder conflictFinder = new ConflictFinder();
-        conflictFinder.setInput(jsonFormatter.getHolder());
+        conflictFinder.setInput(jsonFormatter.getJsonArray());
 
 
         return new DefaultResponsePOJO(jsonFormatter.createJsonTree().getJsonTree(),

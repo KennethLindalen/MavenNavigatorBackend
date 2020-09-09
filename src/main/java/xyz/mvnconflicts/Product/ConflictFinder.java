@@ -11,7 +11,7 @@ import java.util.Collections;
 public class ConflictFinder {
 
 //    Input fields
-    private ArrayList<JsonObject> input;
+    private final ArrayList<JsonObject> splitJsonList = new ArrayList<>();
 
 //    Output fields
     ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
@@ -23,11 +23,12 @@ public class ConflictFinder {
 
 
     public ConflictFinder() {
-
     }
 
     public void setInput(ArrayList<JsonObject> input) {
-        this.input = input;
+        for (JsonObject JsonObject: input) {
+            this.splitJsonList.add(JsonObject.deepCopy());
+        }
     }
 
     public ArrayList<ConflictPOJO> getConflicts() {
@@ -36,23 +37,23 @@ public class ConflictFinder {
 
     public ConflictFinder findConflicts() {
 
-        for (int i = 1; i <= input.size() - 1; i++) {
-            String iV = input.get(i).get(VERSION).getAsString();
-            String iG = input.get(i).get(GROUP_ID).getAsString();
-            String iA = input.get(i).get(ARTIFACT_ID).getAsString();
+        for (int i = 1; i <= this.splitJsonList.size() - 1; i++) {
+            String iV = this.splitJsonList.get(i).get(VERSION).getAsString();
+            String iG = this.splitJsonList.get(i).get(GROUP_ID).getAsString();
+            String iA = this.splitJsonList.get(i).get(ARTIFACT_ID).getAsString();
 
             ConflictPOJO conflictPOJO = new ConflictPOJO();
-            conflictPOJO.setFirstOccurance(input.get(i));
+            conflictPOJO.setFirstOccurance(this.splitJsonList.get(i));
 
-            for (int j = i + 1; j <= input.size() - 1; j++) {
+            for (int j = i + 1; j <= this.splitJsonList.size() - 1; j++) {
 
-                String jA = input.get(j).get(ARTIFACT_ID).getAsString();
-                String jG = input.get(j).get(GROUP_ID).getAsString();
-                String jV = input.get(j).get(VERSION).getAsString();
+                String jA = this.splitJsonList.get(j).get(ARTIFACT_ID).getAsString();
+                String jG = this.splitJsonList.get(j).get(GROUP_ID).getAsString();
+                String jV = this.splitJsonList.get(j).get(VERSION).getAsString();
                 // checks if ArtifactId and GroupId are matches and if version is not equal to object compared to
                 if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
                     conflictPOJO.setFirstOccuranceJsonMap((findParentDependencies(i)));
-                    conflictPOJO.addConflicts(input.get(j).getAsJsonObject());
+                    conflictPOJO.addConflicts(this.splitJsonList.get(j).getAsJsonObject());
                     conflictPOJO.addJsonMap((findParentDependencies(j)));
 
                     if (!(conflictPOJO.getConflicts().isEmpty())) {
@@ -68,20 +69,20 @@ public class ConflictFinder {
     public JsonObject findParentDependencies(int index) {
 
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
-        JsonObject prev = input.get(index + 1);
+        JsonObject prev = this.splitJsonList.get(index + 1);
 
         for (int k = index; k > 0; k--) {
-            if (input.get(k).get(LEVEL).getAsInt() != 1) {
-                if (prev.get(LEVEL).getAsInt() == input.get(k).get(LEVEL).getAsInt() + 1){
-                    conflictMap.add(input.get(k));
-                    prev = input.get(k);
+            if (this.splitJsonList.get(k).get(LEVEL).getAsInt() != 1) {
+                if (prev.get(LEVEL).getAsInt() == this.splitJsonList.get(k).get(LEVEL).getAsInt() + 1
+                        && this.splitJsonList.get(k).get(LEVEL).getAsInt() != prev.get(LEVEL).getAsInt()) {
+                    conflictMap.add(this.splitJsonList.get(k));
+                    prev = this.splitJsonList.get(k);
                 }
             } else {
-                conflictMap.add(input.get(k));
+                conflictMap.add(this.splitJsonList.get(k));
                 break;
             }
         }
-        System.out.println(" $ " + input);
         Collections.reverse(conflictMap);
         return prev;
     }
