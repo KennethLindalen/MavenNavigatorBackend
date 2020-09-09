@@ -6,10 +6,13 @@ import java.util.ArrayList;
 
 
 public class JsonFormatter {
-//    Input fields
+    //    Input fields
     public ArrayList<String> baseText;
 
-//    Output fields
+    // Temp fields
+    ArrayList<JsonObject> holder = new ArrayList<>();
+
+    //    Output fields
     public ArrayList<JsonObject> jsonArray = new ArrayList<>();
     public JsonObject jsonTree = new JsonObject();
 
@@ -27,6 +30,9 @@ public class JsonFormatter {
 
     public ArrayList<JsonObject> getJsonArray() {
         return jsonArray;
+    }
+    public ArrayList<JsonObject> getHolder() {
+        return holder;
     }
 
     public JsonObject getJsonTree() {
@@ -55,31 +61,20 @@ public class JsonFormatter {
             JsonObject jsonObject = createJsonObject(tokens, level);
             this.jsonArray.add(jsonObject);
         }
-        return this;
-    }
-// Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
-    public static JsonObject createJsonTree(ArrayList<JsonObject> depList) throws NullPointerException{
-        ArrayList<JsonObject> holder = new ArrayList<>(depList);
-        holder.remove(0);
-        JsonObject root = depList.get(0).getAsJsonObject();
-        ArrayList<JsonObject> path = new ArrayList<>();
-        path.add(root);
-        for (JsonObject current : holder) {
-            path.get(current.get(LEVEL).getAsInt() - 1).get(SUB_DEPENDENCY).getAsJsonArray().add(current);
-            path = new ArrayList<>(path.subList(0, current.get(LEVEL).getAsInt()));
-            path.add(current);
+
+        for (JsonObject jo : jsonArray) {
+            this.holder.add(jo.deepCopy());
         }
-        return root;
+        this.holder.remove(0);
+        return this;
     }
 
     // Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
-    public JsonFormatter createJsonTree() throws NullPointerException{
-        ArrayList<JsonObject> holder = new ArrayList<>(this.jsonArray);
-        holder.remove(0);
-        JsonObject root = this.jsonArray.get(0).getAsJsonObject();
+    public JsonFormatter createJsonTree() {
+        JsonObject root = holder.get(0).getAsJsonObject();
         ArrayList<JsonObject> path = new ArrayList<>();
         path.add(root);
-        for (JsonObject current : holder) {
+        for (JsonObject current : this.holder) {
             path.get(current.get(LEVEL).getAsInt() - 1).get(SUB_DEPENDENCY).getAsJsonArray().add(current);
             path = new ArrayList<>(path.subList(0, current.get(LEVEL).getAsInt()));
             path.add(current);
@@ -107,7 +102,8 @@ public class JsonFormatter {
 
         return object;
     }
-// Transforms each index from this.baseText into a json object
+
+    // Transforms each index from this.baseText into a json object
     public static JsonObject createJsonObject(String[] tokens, int level) {
 
         JsonObject object = new JsonObject();
@@ -126,6 +122,14 @@ public class JsonFormatter {
 
         return object;
     }
-
+    public <T> T deepCopy(T object, Class<T> type) {
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(gson.toJson(object, type), type);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
