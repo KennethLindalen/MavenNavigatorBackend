@@ -76,7 +76,6 @@ public class JsonFormatter {
         return this;
     }
 
-
     // Creates the JSON object for the first index of this.baseText
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
