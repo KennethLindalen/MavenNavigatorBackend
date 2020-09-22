@@ -79,7 +79,8 @@ public class ConflictFinder {
                 break;
             }
         }
-//        ConflictMap 3-2-1-0
+        // Structure for ConflictMap : 3-2-1-0
+        //TODO: Convert conflictMap into JsonObject
         System.out.println(conflictMap);
         System.out.println();
         return previous;
