@@ -11,6 +11,9 @@ public class ConflictFinder {
 //    Input fields
     private final ArrayList<JsonObject> jsonList = new ArrayList<>();
 
+//    Processing fields
+    ArrayList<JsonObject> copyConflictMap = new ArrayList<>();
+
 //    Output fields
     ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
 
@@ -19,6 +22,8 @@ public class ConflictFinder {
     private static final String ARTIFACT_ID = "ArtifactId";
     private static final String LEVEL = "Level";
     private static final String SUB_DEPENDENCY = "SubDependency";
+
+
 
 
     public ConflictFinder() {
@@ -50,9 +55,9 @@ public class ConflictFinder {
                     ConflictPOJO conflictPOJO = new ConflictPOJO();
 
                     conflictPOJO.setFirstOccurance(this.jsonList.get(i));
-                    conflictPOJO.setFirstOccuranceJsonMap((findParentDependencies(i)));
+                    conflictPOJO.setFirstOccuranceJsonMap(findParentDependencies(i));
                     conflictPOJO.addConflicts(this.jsonList.get(j).getAsJsonObject());
-                    conflictPOJO.addJsonMap((findParentDependencies(j)));
+                    conflictPOJO.addJsonMap(findParentDependencies(j));
 
                     if (!(conflictPOJO.getConflicts().isEmpty())) {
                         this.conflictList.add(conflictPOJO);
@@ -68,7 +73,7 @@ public class ConflictFinder {
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
         JsonObject previous = this.jsonList.get(index + 1);
 
-        for (int i = index; i >= 0; i--) {
+        for (int i = index ; i >= 0; i--) {
             if (this.jsonList.get(i).get(LEVEL).getAsInt() != 0) {
                 if (previous.get(LEVEL).getAsInt() == (this.jsonList.get(i).get(LEVEL).getAsInt() + 1)){
                     previous = this.jsonList.get(i);
@@ -79,11 +84,23 @@ public class ConflictFinder {
                 break;
             }
         }
+        System.out.println(conflictMap);
+        System.out.println(" ");
+        deepCopyConflictMap(conflictMap);
 
         for (int i = 1; i <= conflictMap.size() - 1; i++){
-            conflictMap.get(i).get(SUB_DEPENDENCY).getAsJsonArray().add(conflictMap.get(i - 1));
+            copyConflictMap.get(i).get(SUB_DEPENDENCY).getAsJsonArray().add(copyConflictMap.get(i - 1));
         }
 
-        return conflictMap.get(conflictMap.size() - 1);
+        System.out.println(copyConflictMap.get(copyConflictMap.size() - 1));
+        System.out.println("______________");
+
+        return copyConflictMap.get(copyConflictMap.size() - 1);
+    }
+    public void deepCopyConflictMap(ArrayList<JsonObject> list){
+        this.copyConflictMap.clear();
+        for (JsonObject JsonObject: list) {
+            this.copyConflictMap.add(JsonObject.deepCopy());
+        }
     }
 }
