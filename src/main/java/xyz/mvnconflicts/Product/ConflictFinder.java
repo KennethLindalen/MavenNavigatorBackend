@@ -79,10 +79,11 @@ public class ConflictFinder {
                 break;
             }
         }
-        // Structure for ConflictMap : 3-2-1-0
-        //TODO: Convert conflictMap into JsonObject
-        System.out.println(conflictMap);
-        System.out.println();
-        return previous;
+
+        for (int i = 1; i <= conflictMap.size() - 1; i++){
+            conflictMap.get(i).get(SUB_DEPENDENCY).getAsJsonArray().add(conflictMap.get(i - 1));
+        }
+
+        return conflictMap.get(conflictMap.size() - 1);
     }
 }
