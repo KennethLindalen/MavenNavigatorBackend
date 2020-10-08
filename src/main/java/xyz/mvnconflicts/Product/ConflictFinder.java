@@ -73,7 +73,7 @@ public class ConflictFinder {
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
         JsonObject previous = this.jsonList.get(index + 1);
         conflictMap.add(previous);
-        for (int i = index ; i >= 0; i--) {
+        for (int i = index; i >= 0; i--) {
             if (this.jsonList.get(i).get(LEVEL).getAsInt() != 0) {
                 if (previous.get(LEVEL).getAsInt() == (this.jsonList.get(i).get(LEVEL).getAsInt() + 1)){
                     previous = this.jsonList.get(i);
