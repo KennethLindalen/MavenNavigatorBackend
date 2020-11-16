@@ -10,20 +10,34 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
 
+/**
+ * The type Web security config.
+ */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Configure.
+     *
+     * @param http the http
+     * @throws Exception the exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         // Accepts only requests from https
         http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
-        // Disable cors configuration and csrf protection
+        // Disable cors accessibility and csrf protection
         http.cors().and().csrf().disable();
     }
 
-    // Cors configuration allowing all requests
+    /**
+     * Cors configuration source.
+     *
+     * @return the cors configuration source
+     */
+// Cors configuration allowing all requests
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -1,19 +1,27 @@
 package xyz.mvnconflicts.Rest;
 
-import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.mvnconflicts.Product.ConflictFinder;
 import xyz.mvnconflicts.Product.JsonFormatter;
-import xyz.mvnconflicts.Rest.DTO.InputDTO;
-import xyz.mvnconflicts.Rest.POJO.DefaultResponsePOJO;
+import xyz.mvnconflicts.Rest.Models.DTO.InputDTO;
+import xyz.mvnconflicts.Rest.Models.POJO.DefaultResponsePOJO;
 
 import java.util.ArrayList;
 
+/**
+ * The type Rest controller.
+ */
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
+    /**
+     * Tree builder conflict finder default response pojo.
+     *
+     * @param InputDTO the input dto
+     * @return the default response pojo
+     */
     @PostMapping(value = "/", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public DefaultResponsePOJO treeBuilderConflictFinder(@RequestBody InputDTO InputDTO) {

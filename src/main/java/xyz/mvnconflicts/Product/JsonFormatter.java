@@ -5,12 +5,24 @@ import com.google.gson.*;
 import java.util.ArrayList;
 
 
+/**
+ * The type Json formatter.
+ */
 public class JsonFormatter {
-    //    Input fields
+    /**
+     * The Base text.
+     */
+//    Input fields
     public ArrayList<String> baseText;
 
-    //    Output fields
+    /**
+     * The Json array.
+     */
+//    Output fields
     public ArrayList<JsonObject> jsonArray = new ArrayList<>();
+    /**
+     * The Json tree.
+     */
     public JsonObject jsonTree = new JsonObject();
 
     private static final String VERSION = "Version";
@@ -21,26 +33,48 @@ public class JsonFormatter {
     private static final String SUB_DEPENDENCY = "SubDependency";
 
 
+    /**
+     * Instantiates a new Json formatter.
+     */
     public JsonFormatter() {
 
     }
 
+    /**
+     * Gets json array.
+     *
+     * @return the json array
+     */
     public ArrayList<JsonObject> getJsonArray() {
         return jsonArray;
     }
 
+    /**
+     * Gets json tree.
+     *
+     * @return the json tree
+     */
     public JsonObject getJsonTree() {
         return jsonTree;
     }
 
 
+    /**
+     * Sets base text.
+     *
+     * @param baseText the base text
+     * @return the base text
+     */
     public JsonFormatter setBaseText(ArrayList<String> baseText) {
         this.baseText = baseText;
         return this;
     }
 
-    // Tokenizing input arraylist and transforms them into JSON objects
-    public JsonFormatter formatToJson() {
+    /**
+     * Format to json.
+     */
+// Tokenizing input arraylist and transforms them into JSON objects
+    public void formatToJson() {
         this.jsonArray.add(createTopLevelParent(this.baseText.get(0)));
 
         for (int i = 1; i <= this.baseText.size() - 1; i++) {
@@ -56,11 +90,14 @@ public class JsonFormatter {
             JsonObject jsonObject = createJsonObject(tokens, level);
             this.jsonArray.add(jsonObject);
         }
-
-        return this;
     }
 
-    // Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
+    /**
+     * Create json tree json formatter.
+     *
+     * @return the json formatter
+     */
+// Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
     public JsonFormatter createJsonTree() {
         ArrayList<JsonObject> holder = new ArrayList<>(jsonArray);
         holder.remove(0);
@@ -76,7 +113,13 @@ public class JsonFormatter {
         return this;
     }
 
-    // Creates the JSON object for the first index of this.baseText
+    /**
+     * Create top level parent json object.
+     *
+     * @param parent the parent
+     * @return the json object
+     */
+// Creates the JSON object for the first index of this.baseText
     public static JsonObject createTopLevelParent(String parent) {
         String[] holder = parent.split(" ");
         String[] tokens = holder[0].split(":");
@@ -95,7 +138,14 @@ public class JsonFormatter {
         return object;
     }
 
-    // Transforms each index from this.baseText into a json object
+    /**
+     * Create json object json object.
+     *
+     * @param tokens the tokens
+     * @param level  the level
+     * @return the json object
+     */
+// Transforms each index from this.baseText into a json object
     public static JsonObject createJsonObject(String[] tokens, int level) {
 
         JsonObject object = new JsonObject();
@@ -114,6 +164,15 @@ public class JsonFormatter {
 
         return object;
     }
+
+    /**
+     * Deep copy t.
+     *
+     * @param <T>    the type parameter
+     * @param object the object
+     * @param type   the type
+     * @return the t
+     */
     public <T> T deepCopy(T object, Class<T> type) {
         try {
             Gson gson = new Gson();

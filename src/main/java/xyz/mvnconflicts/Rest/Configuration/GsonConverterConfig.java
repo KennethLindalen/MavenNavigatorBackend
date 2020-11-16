@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 
+/**
+ * The type Gson converter config.
+ */
 // Spring doesn't support the gson converter, this creates that converter
 @Configuration
 @EnableWebMvc

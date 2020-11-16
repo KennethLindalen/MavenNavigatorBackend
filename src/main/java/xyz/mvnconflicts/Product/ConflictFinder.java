@@ -1,19 +1,23 @@
 package xyz.mvnconflicts.Product;
 
 import com.google.gson.JsonObject;
-import xyz.mvnconflicts.Product.POJO.ConflictPOJO;
+import xyz.mvnconflicts.Product.Models.POJO.ConflictPOJO;
 
 import java.util.ArrayList;
 
+/**
+ * The type Conflict finder.
+ */
 // Finds conflicts between json objects in ArrayList created by JsonFormatter
 public class ConflictFinder {
 
 //    Input fields
-    private final ArrayList<JsonObject> jsonList = new ArrayList<>();
+    private ArrayList<JsonObject> jsonList = new ArrayList<>();
 
-//    Processing fields
-    ArrayList<JsonObject> copyConflictMap = new ArrayList<>();
 
+    /**
+     * The Conflict list.
+     */
 //    Output fields
     ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
 
@@ -21,86 +25,121 @@ public class ConflictFinder {
     private static final String GROUP_ID = "GroupId";
     private static final String ARTIFACT_ID = "ArtifactId";
     private static final String LEVEL = "Level";
+    private static final String SCOPE = "Scope";
     private static final String SUB_DEPENDENCY = "SubDependency";
 
 
-
-
+    /**
+     * Instantiates a new Conflict finder.
+     */
     public ConflictFinder() {
     }
 
-    public void setInput(ArrayList<JsonObject> input) {
-        for (JsonObject JsonObject: input) {
-            this.jsonList.add(JsonObject.deepCopy());
-        }
+    /**
+     * Instantiates a new Conflict finder.
+     *
+     * @param input the input
+     */
+    public ConflictFinder(ArrayList<JsonObject> input) {
+        jsonList = deepCopyJsonList(input);
     }
 
+    /**
+     * Sets input.
+     *
+     * @param input the input
+     */
+    public void setInput(ArrayList<JsonObject> input) {
+        jsonList = deepCopyJsonList(input);
+    }
+
+    /**
+     * Gets conflicts.
+     *
+     * @return the conflicts
+     */
     public ArrayList<ConflictPOJO> getConflicts() {
         return conflictList;
     }
 
+    /**
+     * Find conflicts conflict finder.
+     *
+     * @return the conflict finder
+     */
     public ConflictFinder findConflicts() {
+        for (int i = 1; i <= jsonList.size() - 1; i++) {
+            String iV = jsonList.get(i).get(VERSION).getAsString();
+            String iG = jsonList.get(i).get(GROUP_ID).getAsString();
+            String iA = jsonList.get(i).get(ARTIFACT_ID).getAsString();
 
-        for (int i = 1; i <= this.jsonList.size() - 1; i++) {
-            String iV = this.jsonList.get(i).get(VERSION).getAsString();
-            String iG = this.jsonList.get(i).get(GROUP_ID).getAsString();
-            String iA = this.jsonList.get(i).get(ARTIFACT_ID).getAsString();
-            for (int j = i + 1; j <= this.jsonList.size() - 1; j++) {
+            for (int j = i + 1; j <= jsonList.size() - 1; j++) {
+                String jA = jsonList.get(j).get(ARTIFACT_ID).getAsString();
+                String jG = jsonList.get(j).get(GROUP_ID).getAsString();
+                String jV = jsonList.get(j).get(VERSION).getAsString();
 
-                String jA = this.jsonList.get(j).get(ARTIFACT_ID).getAsString();
-                String jG = this.jsonList.get(j).get(GROUP_ID).getAsString();
-                String jV = this.jsonList.get(j).get(VERSION).getAsString();
                 // checks if ArtifactId and GroupId are matches and if version is not equal to object compared to
                 if (iA.equals(jA) && iG.equals(jG) && !(iV.equals(jV))) {
+                    
                     ConflictPOJO conflictPOJO = new ConflictPOJO();
-
-                    conflictPOJO.setFirstOccurance(this.jsonList.get(i));
+                    conflictPOJO.setFirstOccurance(jsonList.get(i));
                     conflictPOJO.setFirstOccuranceJsonMap(findParentDependencies(i));
-                    conflictPOJO.addConflicts(this.jsonList.get(j).getAsJsonObject());
+                    conflictPOJO.addConflicts(jsonList.get(j).getAsJsonObject());
                     conflictPOJO.addJsonMap(findParentDependencies(j));
 
                     if (!(conflictPOJO.getConflicts().isEmpty())) {
-                        this.conflictList.add(conflictPOJO);
-                    }
-                }
-            }
+                        conflictList.add(conflictPOJO);
+                    } 
+                } 
+            } 
         }
         return this;
-    }
+    } // End of findConflicts function
 
-    // Finds parent dependencies to separate each project by itself
-    public JsonObject findParentDependencies(int index) {
+    /**
+     * Find parent dependencies json object.
+     *
+     * @param conflictIndex the conflict index
+     * @return the json object
+     */
+// Finds parent dependencies to separate each project by itself
+    public JsonObject findParentDependencies(int conflictIndex) {
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
-        JsonObject previous = this.jsonList.get(index + 1);
+        ArrayList<JsonObject> copyConflictMap;
+        JsonObject previous = jsonList.get(conflictIndex);
         conflictMap.add(previous);
-        for (int i = index; i >= 0; i--) {
-            if (this.jsonList.get(i).get(LEVEL).getAsInt() != 0) {
-                if (previous.get(LEVEL).getAsInt() == (this.jsonList.get(i).get(LEVEL).getAsInt() + 1)){
-                    previous = this.jsonList.get(i);
-                    conflictMap.add(this.jsonList.get(i));
+        for (int k = conflictIndex - 1; k >= 0; k--) {
+            if (jsonList.get(k).get(LEVEL).getAsInt() != 0) {
+                if (previous.get(LEVEL).getAsInt() == (jsonList.get(k).get(LEVEL).getAsInt() + 1)){
+                    previous = jsonList.get(k);
+                    conflictMap.add(jsonList.get(k));
                 }
             } else {
-                conflictMap.add(this.jsonList.get(i));
+                conflictMap.add(jsonList.get(k));
                 break;
             }
         }
-        System.out.println(conflictMap);
-        System.out.println(" ");
-        deepCopyConflictMap(conflictMap);
+
+        copyConflictMap = deepCopyJsonList(conflictMap);
 
         for (int i = 1; i <= conflictMap.size() - 1; i++){
             copyConflictMap.get(i).get(SUB_DEPENDENCY).getAsJsonArray().add(copyConflictMap.get(i - 1));
         }
 
-        System.out.println(copyConflictMap.get(copyConflictMap.size() - 1));
-        System.out.println("______________");
-
         return copyConflictMap.get(copyConflictMap.size() - 1);
-    }
-    public void deepCopyConflictMap(ArrayList<JsonObject> list){
-        this.copyConflictMap.clear();
+    } // End of findParentDependencies function
+
+    /**
+     * Deep copy json list array list.
+     *
+     * @param list the list
+     * @return the array list
+     */
+    public ArrayList<JsonObject> deepCopyJsonList(ArrayList<JsonObject> list){
+        ArrayList<JsonObject> copyList = new ArrayList<>();
         for (JsonObject JsonObject: list) {
-            this.copyConflictMap.add(JsonObject.deepCopy());
+            copyList.add(JsonObject.deepCopy());
         }
-    }
+        return copyList;
+    } // End of deepCopyJsonList function
 }
