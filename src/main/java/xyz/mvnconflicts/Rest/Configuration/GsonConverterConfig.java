@@ -10,9 +10,10 @@ import java.util.List;
 
 
 /**
- * The type Gson converter config.
+ *
+ * Spring doesn't support the gson converter, this creates that converter so that it can be returned in the HTTP requests.
  */
-// Spring doesn't support the gson converter, this creates that converter
+
 @Configuration
 @EnableWebMvc
 public class GsonConverterConfig extends WebMvcConfigurerAdapter {

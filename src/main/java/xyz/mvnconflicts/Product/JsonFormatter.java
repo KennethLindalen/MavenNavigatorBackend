@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 
 /**
- * The type Json formatter.
+ * Formattes the lines from the dependency file into JSON.
  */
 public class JsonFormatter {
     /**
-     * The Base text.
+     * ArrayList of dependency list split into lines per index.
      */
 //    Input fields
     public ArrayList<String> baseText;
@@ -21,7 +21,7 @@ public class JsonFormatter {
 //    Output fields
     public ArrayList<JsonObject> jsonArray = new ArrayList<>();
     /**
-     * The Json tree.
+     * Output field of the complete JsonTree to be displayed on website.
      */
     public JsonObject jsonTree = new JsonObject();
 
@@ -43,7 +43,7 @@ public class JsonFormatter {
     /**
      * Gets json array.
      *
-     * @return the json array
+     * @return ArrayList of JsonObjects.
      */
     public ArrayList<JsonObject> getJsonArray() {
         return jsonArray;
@@ -63,7 +63,7 @@ public class JsonFormatter {
      * Sets base text.
      *
      * @param baseText the base text
-     * @return the base text
+     * @return current instance of object.
      */
     public JsonFormatter setBaseText(ArrayList<String> baseText) {
         this.baseText = baseText;
@@ -72,10 +72,11 @@ public class JsonFormatter {
 
     /**
      * Format to json.
+     * Tokenizing input arraylist and transforms them into JSON objects
      */
-// Tokenizing input arraylist and transforms them into JSON objects
+
     public void formatToJson() {
-        this.jsonArray.add(createTopLevelParent(this.baseText.get(0)));
+        this.jsonArray.add(createRootLevelParent(this.baseText.get(0)));
 
         for (int i = 1; i <= this.baseText.size() - 1; i++) {
             String[] tokens = this.baseText.get(i).split(" ");
@@ -94,10 +95,11 @@ public class JsonFormatter {
 
     /**
      * Create json tree json formatter.
+     * Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON.
      *
-     * @return the json formatter
+     * @return current instance of object after tree has been generated.
      */
-// Sorts the JSON objects created by formatToJSON into a tree structure based on level created by formatToJSON
+
     public JsonFormatter createJsonTree() {
         ArrayList<JsonObject> holder = new ArrayList<>(jsonArray);
         holder.remove(0);
@@ -114,13 +116,14 @@ public class JsonFormatter {
     }
 
     /**
-     * Create top level parent json object.
+     * Create root level parent json object.
+     * Creates the JSON object for the first index of this.baseText
      *
      * @param parent the parent
-     * @return the json object
+     * @return current instance of object after root level parent object has been created.
      */
-// Creates the JSON object for the first index of this.baseText
-    public static JsonObject createTopLevelParent(String parent) {
+
+    public static JsonObject createRootLevelParent(String parent) {
         String[] holder = parent.split(" ");
         String[] tokens = holder[0].split(":");
 
@@ -141,9 +144,9 @@ public class JsonFormatter {
     /**
      * Create json object json object.
      *
-     * @param tokens the tokens
-     * @param level  the level
-     * @return the json object
+     * @param tokens tokens created by formatToJson
+     * @param level  depth of object related to root level parent.
+     * @return current instance of object after json object has been created.
      */
 // Transforms each index from this.baseText into a json object
     public static JsonObject createJsonObject(String[] tokens, int level) {
@@ -163,24 +166,6 @@ public class JsonFormatter {
         object.add(SUB_DEPENDENCY, array);
 
         return object;
-    }
-
-    /**
-     * Deep copy t.
-     *
-     * @param <T>    the type parameter
-     * @param object the object
-     * @param type   the type
-     * @return the t
-     */
-    public <T> T deepCopy(T object, Class<T> type) {
-        try {
-            Gson gson = new Gson();
-            return gson.fromJson(gson.toJson(object, type), type);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

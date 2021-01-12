@@ -6,25 +6,25 @@ import xyz.mvnconflicts.Product.Models.POJO.ConflictPOJO;
 import java.util.ArrayList;
 
 /**
- * The type Default response pojo.
+ * Default POJO for data returned from the request
  */
-// Default POJO for data returned from the request
+
 public class DefaultResponsePOJO {
 
     /**
-     * The Json tree.
+     * JsonTree created by JsonFormatter.java
      */
     public JsonObject jsonTree;
     /**
-     * The Conflict pojos.
+     * Conflicts found by ConflictFinder.java
      */
     public ArrayList<ConflictPOJO> conflictPOJOS;
 
     /**
      * Instantiates a new Default response pojo.
      *
-     * @param jsonTree      the json tree
-     * @param conflictPOJOS the conflict pojos
+     * @param jsonTree      JsonTree created by JsonFormatter.java
+     * @param conflictPOJOS Conflicts found by ConflictFinder.java
      */
     public DefaultResponsePOJO(JsonObject jsonTree, ArrayList<ConflictPOJO> conflictPOJOS) {
         this.jsonTree = jsonTree;

@@ -7,20 +7,26 @@ import java.util.ArrayList;
 
 /**
  * The type Conflict finder.
+ * Finds conflicts between json objects in ArrayList created by JsonFormatter
  */
-// Finds conflicts between json objects in ArrayList created by JsonFormatter
 public class ConflictFinder {
 
+    /**
+     * List of json objects from JsonFormatter
+     */
 //    Input fields
     private ArrayList<JsonObject> jsonList = new ArrayList<>();
 
 
     /**
-     * The Conflict list.
+     * ArrayList of ConflictPOJO(s)
      */
 //    Output fields
     ArrayList<ConflictPOJO> conflictList = new ArrayList<>();
 
+    /**
+     * Field names
+     */
     private static final String VERSION = "Version";
     private static final String GROUP_ID = "GroupId";
     private static final String ARTIFACT_ID = "ArtifactId";
@@ -38,16 +44,16 @@ public class ConflictFinder {
     /**
      * Instantiates a new Conflict finder.
      *
-     * @param input the input
+     * @param input list of json objects from JsonFormatter
      */
     public ConflictFinder(ArrayList<JsonObject> input) {
         jsonList = deepCopyJsonList(input);
     }
 
     /**
-     * Sets input.
+     * Sets input by creating a deep copy of json objects from JsonFormatter.
      *
-     * @param input the input
+     * @param input List of json objects from JsonFormatter
      */
     public void setInput(ArrayList<JsonObject> input) {
         jsonList = deepCopyJsonList(input);
@@ -56,16 +62,16 @@ public class ConflictFinder {
     /**
      * Gets conflicts.
      *
-     * @return the conflicts
+     * @return Conflicts found
      */
     public ArrayList<ConflictPOJO> getConflicts() {
         return conflictList;
     }
 
     /**
-     * Find conflicts conflict finder.
+     * Find conflicts in json objects from JsonFormatter
      *
-     * @return the conflict finder
+     * @return the instance of object after conflicts has been found.
      */
     public ConflictFinder findConflicts() {
         for (int i = 1; i <= jsonList.size() - 1; i++) {
@@ -94,15 +100,15 @@ public class ConflictFinder {
             } 
         }
         return this;
-    } // End of findConflicts function
+    }
 
     /**
-     * Find parent dependencies json object.
+     * Find parent dependencies of conflicts found in findConflicts.
      *
-     * @param conflictIndex the conflict index
-     * @return the json object
+     * @param conflictIndex Index of where the conflict is found.
+     * @return JsonObject and all its parents up till root object.
      */
-// Finds parent dependencies to separate each project by itself
+
     public JsonObject findParentDependencies(int conflictIndex) {
         ArrayList<JsonObject> conflictMap = new ArrayList<>();
         ArrayList<JsonObject> copyConflictMap;
@@ -127,13 +133,13 @@ public class ConflictFinder {
         }
 
         return copyConflictMap.get(copyConflictMap.size() - 1);
-    } // End of findParentDependencies function
+    }
 
     /**
      * Deep copy json list array list.
      *
-     * @param list the list
-     * @return the array list
+     * @param ArrayList of JsonObjects to deep copy
+     * @return deep copied ArrayList
      */
     public ArrayList<JsonObject> deepCopyJsonList(ArrayList<JsonObject> list){
         ArrayList<JsonObject> copyList = new ArrayList<>();
@@ -141,5 +147,5 @@ public class ConflictFinder {
             copyList.add(JsonObject.deepCopy());
         }
         return copyList;
-    } // End of deepCopyJsonList function
+    }
 }

@@ -17,7 +17,8 @@ import java.util.Collections;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
-     * Configure.
+     * Disables CORS and CSRF protection aswell as makes it so the REST requests can only by answered if sent by HTTPS
+     * client
      *
      * @param http the http
      * @throws Exception the exception
@@ -33,11 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Cors configuration source.
+     * Allowing all CORS requests
      *
      * @return the cors configuration source
      */
-// Cors configuration allowing all requests
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class RestController {
 
     /**
-     * Tree builder conflict finder default response pojo.
+     * Entrypoint to access the API and get JsonTree and conflicts in Maven repo
      *
      * @param InputDTO the input dto
      * @return the default response pojo

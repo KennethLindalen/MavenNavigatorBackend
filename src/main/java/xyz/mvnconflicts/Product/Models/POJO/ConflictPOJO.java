@@ -5,36 +5,27 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 /**
- * The type Conflict pojo.
+ * POJO class for storing conlficts
  */
 // Default POJO for conflicts
 public class ConflictPOJO {
     /**
-     * The First occurance.
+     * firstOccurance is the object that is all the remaining objects are compared to
      */
-// firstOccurance is the object that is all the remaining objects are compared to
+
     JsonObject firstOccurance;
     /**
-     * The First occurance json map.
+     * firstOccurance JsonMap
      */
     JsonObject firstOccuranceJsonMap = new JsonObject();
     /**
-     * The Conflicts.
+     * Conflict(s) of firstOccurance
      */
     ArrayList<JsonObject> conflicts = new ArrayList<>();
     /**
-     * The Json map.
+     * Map(s) of conflicts in conflicts ArrayList
      */
     ArrayList<JsonObject> jsonMap = new ArrayList<>();
-
-    /**
-     * Add json map.
-     *
-     * @param jsonMap the json map
-     */
-    public void addJsonMap(JsonObject jsonMap) {
-        this.jsonMap.add(jsonMap);
-    }
 
     /**
      * Instantiates a new Conflict pojo.
@@ -58,6 +49,15 @@ public class ConflictPOJO {
      */
     public void setFirstOccurance(JsonObject firstOccurance) {
         this.firstOccurance = firstOccurance;
+    }
+
+    /**
+     * Add json map to jsonMap ArrayList
+     *
+     * @param jsonMap the json map
+     */
+    public void addJsonMap(JsonObject jsonMap) {
+        this.jsonMap.add(jsonMap);
     }
 
     /**
